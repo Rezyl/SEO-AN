@@ -33,6 +33,7 @@ public class HtmlParserController {
         ArrayList<String> products = new ArrayList<String>();
 
         // HEUREKA
+
         heureka.put("url", url);
         heureka.put("paging_url", "?f=");
         heureka.put("max_page", "4");
