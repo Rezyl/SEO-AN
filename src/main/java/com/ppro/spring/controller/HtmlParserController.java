@@ -1,7 +1,7 @@
 package com.ppro.spring.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,25 +25,23 @@ public class HtmlParserController {
 
     }
 
-        @RequestMapping(value = "/getURL", method = RequestMethod.POST)
-	public String getResults(Model model, @RequestParam("url") String url) {
-
-        
-        Map<String,String> heureka = new HashMap<String, String>();
-        ArrayList<String> products = new ArrayList<String>();
-
+        @RequestMapping(value = "/getNumberOfPosition", method = RequestMethod.POST)
+	public String getResults(Model model, @RequestParam("url") String url,@RequestParam("key") String key,@RequestParam("numberOfPage") String numberOfPage) {
+            
+        Map<String,String> heureka = new HashMap<>();
         // HEUREKA
 
         heureka.put("url", url);
+            heureka.put("max_page", numberOfPage);
+
         heureka.put("paging_url", "?f=");
-        heureka.put("max_page", "4");
         heureka.put("product_link", "h2 a");
         heureka.put("product_name", "h1");
 
-            //http://krmivo-psy.heureka.cz/
+        //http://krmivo-psy.heureka.cz/
 
         heureka_bot.setConfig(heureka);
-        products = heureka_bot.run();
+        List<String> products = heureka_bot.run();
         model.addAttribute("resultList", products);
 
         return "results";

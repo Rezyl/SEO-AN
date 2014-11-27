@@ -17,10 +17,16 @@
 	Results
 </h1>
 
-<form:form action="getURL">
+<form:form action="getNumberOfPosition" method="post">
 
-    <input name="url" >
-    <input type="submit" name="submit" value="Posli">
+    <form:label path="key">Klíčové slovo:</form:label>
+    <input name="key" ><br/>
+    <form:label path="url">Hledané URL</form:label>
+    <input name="url" ><br/>
+    <form:label path="numberOfPage">Počet stránek:</form:label>
+    <input name="numberOfPage" ><br/>
+
+    <input type="submit" name="submit" value="Zjisti">
 </form:form>
 
 </body>
