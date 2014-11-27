@@ -21,14 +21,14 @@ public class HtmlParserController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        return "index";
+        return "template";
 
     }
 
         @RequestMapping(value = "/getNumberOfPosition", method = RequestMethod.POST)
 	public String getResults(Model model, @RequestParam("url") String url,@RequestParam("key") String key,@RequestParam("numberOfPage") String numberOfPage) {
             
-        Map<String,String> heureka = new HashMap<>();
+        Map<String,String> heureka = new HashMap();
         // HEUREKA
 
         heureka.put("url", url);

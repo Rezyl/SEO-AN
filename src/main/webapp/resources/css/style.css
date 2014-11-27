@@ -1,0 +1,104 @@
+
+html, body
+{
+ background-color: #2ba3d4;
+}
+ 
+#side_bar
+{
+ overflow: hidden;
+ width: 200px;
+ float: left;
+ background-color: #000000;
+ margin-top: 40px;
+ position: fixed;
+ z-index: 3;
+}
+
+#side_bar a.logo
+{
+ float: left;
+ width: 100%;
+ margin: 5px 0px 10px 0px;
+}
+
+#side_bar .pure-menu
+{
+ float: left;
+ width: 100%;
+ background-color: #000000;
+ border: 0px;
+}
+
+#side_bar nav ul li a
+{
+ color: #ffffff;
+ font-size: 14px;
+}
+
+#side_bar nav ul li a:hover
+{
+ color: #000000;
+}
+
+#content
+{
+ width: 100%;
+ min-width: 460px;
+ max-width: 780px;
+ min-height: 450px;
+ padding: 20px 70px 40px 70px;
+ display: block;
+ margin: auto;
+ background-color: #ffffff;
+}
+
+#content article h1
+{
+ font-weight: bold;
+ margin: 0px 0px 10px 0px;
+}
+
+#content article p
+{
+ text-align: justify;
+}
+
+#content article hr
+{
+ margin: 20px 0px 20px 0px;
+ display: block;
+ height: 1px;
+ border: 0;
+ border-top: 1px solid #e5e5e5;
+}
+
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary
+{
+ color: white;
+ border-radius: 4px;
+ text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.button-success
+{
+ background: rgb(28, 184, 65); /* this is a green */
+}
+
+.button-error
+{
+ background: rgb(202, 60, 60); /* this is a maroon */
+}
+
+.button-warning
+{
+ background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.button-secondary
+{
+ background: rgb(66, 184, 221); /* this is a light blue */
+}
