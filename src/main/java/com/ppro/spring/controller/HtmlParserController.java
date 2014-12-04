@@ -26,8 +26,8 @@ public class HtmlParserController {
 
     }
 
-        @RequestMapping(value = "/getNumberOfPosition", method = RequestMethod.GET)
-	public String getResults(Model model, @RequestParam("url") String url,@RequestParam("key") String key,@RequestParam("numberOfPage") String numberOfPage) {
+    @RequestMapping(value = "/getNumberOfPosition", method = RequestMethod.GET)
+	public String getResults(Model model, @RequestParam("url") String url, @RequestParam("key") String key,@RequestParam("numberOfPage") String numberOfPage) {
             
         Map<String,String> heureka = new HashMap();
         // HEUREKA
@@ -45,8 +45,8 @@ public class HtmlParserController {
         List<String> products = heureka_bot.run();
         model.addAttribute("resultList", products);
 
-            model.addAttribute("pageName", "results");
+        model.addAttribute("pageName", "results");
         return "template";
 	}
-	
+
 }

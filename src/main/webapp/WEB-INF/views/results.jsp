@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h1>Ahoj blbe</h1>
+<h1>Výsledky</h1>
 <table class="pure-table">
     <thead>
     <tr>
