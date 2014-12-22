@@ -11,73 +11,35 @@ import org.springframework.stereotype.Service;
 @Service
 public class HtmlParserService
 {
-	public ArrayList<String> getDataFromURL(String url, String selection)
-	{
-		Document doc;
-		try
-		{
-			doc = Jsoup.connect(url).get();
-			Elements links = doc.select(selection);
-			ArrayList<String> data_array = new ArrayList<String>();
+    public Elements getElements(String url, int start, int increment, int number_of_pages, String element_selection)
+    {
+        Elements elements = new Elements();
+        try
+        {
+            for(int i=start; i<number_of_pages; i++)
+            {
+                Document doc = Jsoup.connect(url + (i*increment)).get();
+                elements.addAll(doc.select(element_selection));
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
-			for(int i=0; i<links.size(); i++)
-			{
-				String para = links.get(i).html();
-				data_array.add(para);
-		    }
+        return elements;
+    }
 
-			return data_array;
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-			ArrayList<String> data_array = new ArrayList<String>();
-			return data_array;
-		}
-	}
-	
-	public String getParam(String url, String selection)
-	{
-		Document doc;
-		try
-		{
-			doc = Jsoup.connect(url).get();
-			String param = doc.select(selection).html();
-			return param;
-			
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-			return "";
-		}
-	}
-	
-	public ArrayList<String> getLinks(String url, String selection)
-	{
-		Document doc;
+    public ArrayList<String> getAttributes(Elements elements, String attribute_selection)
+    {
+        ArrayList<String> attributes_array = new ArrayList<String>();
 
-		try
-		{
-			doc = Jsoup.connect(url).get();
-			Elements links = doc.select(selection);
-			ArrayList<String> links_array = new ArrayList<String>();
+        for (int j = 0; j < elements.size(); j++)
+        {
+            String attribute = elements.get(j).attr(attribute_selection);
+            attributes_array.add(attribute);
+        }
 
-			for(int i=0; i<links.size(); i++)
-			{
-				String para = links.get(i).attr("href");
-				links_array.add(para);
-		    }
-
-			return links_array;
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-			ArrayList<String> links_array = new ArrayList<String>();
-			return links_array;
-		}
-
-	}
-
+        return attributes_array;
+    }
 }

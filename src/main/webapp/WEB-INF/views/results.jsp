@@ -10,6 +10,7 @@
     <c:forEach items="${resultList}" var="r">
         <tr><td><c:out value="${r}"/></td></tr>
     </c:forEach>
-
     </tbody>
+
+    <span>Pozice: ${position}</span>
 </table>
