@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <h1>Zjištění pozice</h1>
 
 <form class="pure-form" action="/pozice_zpracuj" method="get">
