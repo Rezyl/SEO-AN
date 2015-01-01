@@ -13,5 +13,7 @@
     </c:forEach>
     </tbody>
 
-    <span>Pozice: ${position}</span>
+    <p>Pozice Seznam.cz: ${seznam_position}</p>
+    <p>Pozice Google.com: ${google_position}</p>
+    <p>Pozice Centrum.cz: ${centrum_position}</p>
 </table>

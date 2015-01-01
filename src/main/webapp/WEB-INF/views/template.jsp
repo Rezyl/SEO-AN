@@ -27,9 +27,8 @@
 			<nav class="pure-menu pure-menu-open">
 				<ul>
 					<li><a href="/">Home</a></li>
-					<li><a href="/pozice">Pozice</a></li>
+					<li><a href="/pozice">Zjištění pozice</a></li>
 					<li><a href="#">Přihlášení</a></li>
-					<li><a href="#">Zjištění pozice</a></li>
 					<li><a href="#">Validátor</a></li>
 					<li><a href="#">Expirace domény</a></li>
 					<li><a href="#">Další</a></li>
