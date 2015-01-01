@@ -84,7 +84,7 @@ public class PositionController
 
         return position;
     }
-
+//http://search.centrum.cz/index.php?q=
     public int getCentrumPosition(String url, String key, int number_of_pages)
     {
         Elements elements = HtmlParser.getElements("http://search.centrum.cz/index.php?q="+key+"&from=", 0, 10, number_of_pages, "h3 a");
