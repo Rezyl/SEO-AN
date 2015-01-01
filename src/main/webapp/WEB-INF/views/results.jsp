@@ -12,7 +12,6 @@
         <tr><td><c:out value="${r}"/></td></tr>
     </c:forEach>
     </tbody>
-
     <p>Pozice Seznam.cz: ${seznam_position}</p>
     <p>Pozice Google.com: ${google_position}</p>
     <p>Pozice Centrum.cz: ${centrum_position}</p>
