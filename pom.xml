@@ -169,7 +169,16 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>1.7.1.RELEASE</version>
         </dependency>
-
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.core</artifactId>
+            <version>3.1.0.CR10</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -197,6 +206,7 @@
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>

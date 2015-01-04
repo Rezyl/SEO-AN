@@ -1,51 +1,45 @@
 package com.ppro.spring.controller;
 
-import com.ppro.spring.service.HtmlParserService;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import com.ppro.spring.model.Profile;
+import com.ppro.spring.service.api.HtmlParserService;
+import com.ppro.spring.service.api.ProfileService;
+import com.ppro.spring.utils.AppUtils;
 
 @Controller
-public class PositionController
-{
-    @Autowired
-    private HtmlParserService HtmlParser;
+public class PositionController {
+	@Autowired
+	private HtmlParserService htmlParserService;
 
-    @RequestMapping(value = "/pozice", method = RequestMethod.GET)
-    public String position(Model model)
-    {
-        model.addAttribute("pageName", "position");
-        return "template";
-    }
+	@Autowired
+	private ProfileService profileService;
 
-    @RequestMapping(value = "/pozice_zpracuj", method = RequestMethod.GET)
-	public String getResults(Model model, @RequestParam("url") String url,@RequestParam("key") String key,@RequestParam("numberOfPage") String numberOfPage)
-    {
-        int number_of_pages = Integer.parseInt(numberOfPage);
+	@RequestMapping(value = "/pozice", method = RequestMethod.GET)
+	public String position(Model model) {
+		return AppUtils.goToPage(model, "position");
+	}
 
-        // Seznam.cz
-        Elements elements = HtmlParser.getElements("http://search.seznam.cz/?q="+key+"&count=10&from=", 0, 10, number_of_pages, ".info a");
-        List<String> links = HtmlParser.getAttributes(elements, "href");
+	@RequestMapping(value = "/pozice_zpracuj", method = RequestMethod.GET)
+	public ModelAndView getResults(@RequestParam("url") String url, @RequestParam("key") String key, @RequestParam("numberOfPage") String numberOfPage) {
 
-        int position = 0;
+        ModelAndView mav = new ModelAndView();
+        //find position
+		int position = htmlParserService.getPosition(key, url, Integer.parseInt(numberOfPage));
 
-        for (int i = 0; i < links.size(); i++)
-        {
-            if (links.get(i).equals(url))
-            {
-                position = i + 1;
-            }
-        }
+        //try load profile
+        Profile profile = profileService.loadProfile(url);
+        //add result to exist profile
+        profileService.addSearchResult(profile,key,position);
 
-        model.addAttribute("resultList", links);
-        model.addAttribute("position", position);
-        model.addAttribute("pageName", "results");
-        return "template";
+        mav.addObject("subject", key);
+        mav.addObject("position", position);
+		return AppUtils.goToPageByModelAndView(mav, "results");
 	}
 }

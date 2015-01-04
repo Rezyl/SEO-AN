@@ -13,7 +13,13 @@
 		infrastructure -->
 
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+    <annotation-driven>
+        <message-converters register-defaults="true">
+            <beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <beans:property name="supportedMediaTypes" value = "text/plain;charset=UTF-8" />
+            </beans:bean>
+        </message-converters>
+    </annotation-driven>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
@@ -25,6 +31,7 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+        <beans:property name="contentType" value="text/html;charset=UTF-8" />
 	</beans:bean>
 
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
@@ -47,12 +54,13 @@
 
 		<beans:property name="hibernateProperties">
 			<beans:props>
-				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</beans:prop>
+				<beans:prop key="hibernate.dialect">com.ppro.spring.utils.CustomMysqlDialect</beans:prop>
+                <beans:prop key="hibernate.connection.characterEncoding">utf8</beans:prop>
 				<beans:prop key="hibernate.show_sql">true</beans:prop>
                 <beans:prop key="hibernate.hbm2ddl.auto">update</beans:prop>
 			</beans:props>
 		</beans:property>
-        <beans:property name="packagesToScan" value="com.ppro.spring.dao"></beans:property>
+        <beans:property name="packagesToScan" value="com.ppro.spring.model"/>
 	</beans:bean>
 
 	<context:component-scan base-package="com.ppro.spring" />
@@ -62,6 +70,11 @@
 	<beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<beans:property name="sessionFactory" ref="sessionFactory" />
 	</beans:bean>
+
+    <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="basename" value="classpath:messages"/>
+        <beans:property name="defaultEncoding" value="UTF-8"/>
+    </beans:bean>
 
 
 </beans:beans>

@@ -1,17 +1,16 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-<h1>Výsledky</h1>
-<table class="pure-table">
-    <thead>
-    <tr>
-        <th>#</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${resultList}" var="r">
-        <tr><td><c:out value="${r}"/></td></tr>
-    </c:forEach>
-    </tbody>
+<%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
-    <span>Pozice: ${position}</span>
-</table>
+
+<jsp:include page="position.jsp"/>
+
+<hr />
+<h1>Výsledek</h1>
+<c:choose>
+    <c:when test="${position == 0}">
+        <span>Vaše hledané slovo - ${subject} nebylo nalezeno. Zkuste zvýšit počet stranek na kterých se má hledat.</span>
+    </c:when>
+    <c:otherwise>
+        <span>Vaše hledané slovo - ${subject} se nachází na ${position} pozici.</span>
+    </c:otherwise>
+</c:choose>
+

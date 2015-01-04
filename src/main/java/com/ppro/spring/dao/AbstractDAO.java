@@ -17,7 +17,7 @@ public abstract class AbstractDAO<T> {
 	protected SessionFactory sessionFactory;
 
 	@SuppressWarnings("unchecked")
-	public T getById(Long id) {
+	public T getById(String id) {
 		return (T) getCurrentSession().get(getClazz(), id);
 	}
 
@@ -42,7 +42,7 @@ public abstract class AbstractDAO<T> {
 		getCurrentSession().merge(type);
 	}
 
-	public void deleteByID(Long id) {
+	public void deleteByID(String id) {
 		T t = getById(id);
 		getCurrentSession().delete(t);
 	}

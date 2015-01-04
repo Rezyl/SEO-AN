@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 
 <html>
@@ -27,7 +26,8 @@
 			<nav class="pure-menu pure-menu-open">
 				<ul>
 					<li><a href="/">Home</a></li>
-					<li><a href="/pozice">Pozice</a></li>
+                    <li><a href="/showAllProfiles">Profily</a></li>
+                    <li><a href="/pozice">Pozice</a></li>
 					<li><a href="#">Přihlášení</a></li>
 					<li><a href="#">Zjištění pozice</a></li>
 					<li><a href="#">Validátor</a></li>
