@@ -1,105 +1,67 @@
 package com.ppro.spring.controller;
 
-import com.ppro.spring.service.HtmlParserService;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import com.ppro.spring.model.Profile;
+import com.ppro.spring.model.Server;
+import com.ppro.spring.service.api.HtmlParserService;
+import com.ppro.spring.service.api.ProfileService;
+import com.ppro.spring.utils.AppUtils;
 
 @Controller
-public class PositionController
-{
-    @Autowired
-    private HtmlParserService HtmlParser;
+public class PositionController {
+	@Autowired
+	private HtmlParserService htmlParserService;
 
-    @RequestMapping(value = "/pozice", method = RequestMethod.GET)
-    public String position(Model model)
-    {
-        model.addAttribute("pageName", "position");
-        return "template";
-    }
+	@Autowired
+	private ProfileService profileService;
 
-    @RequestMapping(value = "/pozice_zpracuj", method = RequestMethod.GET)
-	public String getResults(Model model, @RequestParam("url") String url,@RequestParam("key") String key,@RequestParam("numberOfPage") String numberOfPage)
-    {
-        int number_of_pages = Integer.parseInt(numberOfPage);
-
-        // Seznam.cz
-        int seznam_position = getSeznamPosition(url, key, number_of_pages);
-
-        // Google.com
-        int google_position = getGooglePosition(url, key, number_of_pages);
-
-        // Centrum.cz
-        int centrum_position = getCentrumPosition(url, key, number_of_pages);
-
-        Elements elements = HtmlParser.getElements("http://www.google.cz/search?q="+key+"&start=", 0, 10, number_of_pages, "a");
-        List<String> links = HtmlParser.getAttributes(elements, "href");
-
-        model.addAttribute("resultList", links);
-        model.addAttribute("seznam_position", seznam_position);
-        model.addAttribute("google_position", google_position);
-        model.addAttribute("centrum_position", centrum_position);
-        model.addAttribute("pageName", "results");
-        return "template";
+	@RequestMapping(value = "/pozice", method = RequestMethod.GET)
+	public String position(Model model) {
+        model.addAttribute("search_engines", Server.getAll());
+		return AppUtils.goToPage(model, "position");
 	}
 
-    public int getSeznamPosition(String url, String key, int number_of_pages)
-    {
-        Elements elements = HtmlParser.getElements("http://search.seznam.cz/?q="+key+"&count=10&from=", 0, 10, number_of_pages, ".info a");
-        List<String> links = HtmlParser.getAttributes(elements, "href");
+	@RequestMapping(value = "/pozice_zpracuj", method = RequestMethod.GET)
+	public ModelAndView getResults(@RequestParam("url") String url, @RequestParam("key") String key, @RequestParam("numberOfPage") String numberOfPage, @RequestParam("serverCode") String serverCode) {
 
-        int position = 0;
+        ModelAndView mav = new ModelAndView();
+        //find positions
+        String message = resolvePosition(key, url, Integer.parseInt(numberOfPage), serverCode);
 
-        for (int i = 0; i < links.size(); i++)
-        {
-            if (links.get(i).equals(url))
-            {
-                position = i + 1;
+        mav.addObject("subject", key);
+        mav.addObject("message", message);
+        mav.addObject("search_engines", Server.getAll());
+		return AppUtils.goToPageByModelAndView(mav, "results");
+	}
+
+    private String resolvePosition(String key, String url, int numberOfPage, String serverCode) {
+        //try load profile
+        Profile profile = profileService.loadProfile(url);
+        String message;
+        if ("ALL".equals(serverCode)) {
+            StringBuilder sb = new StringBuilder(String.format("Hledané slovo - %s je ve vyhledávači",key));
+            for (Server server : Server.values()) {
+                int position = htmlParserService.getPosition(key, url, numberOfPage, server);
+                //add result to exist profile
+                profileService.addSearchResult(profile,key,position, server);
+                sb.append(String.format("%n%s na pozici %s.",server.getName(), position));
             }
+            message = sb.toString();
+        } else {
+            Server server = Server.valueOf(serverCode);
+            int position = htmlParserService.getPosition(key, url, numberOfPage, server);
+            //add result to exist profile
+            profileService.addSearchResult(profile,key,position, server);
+            message = String.format("Hledané slovo - %s je ve vyhledávači - %s na pozici %s.",key,server.getName(), position);
         }
-
-        return position;
-    }
-//    https://www.google.cz/search?q=auto.cz&start=10
-    public int getGooglePosition(String url, String key, int number_of_pages)
-    {
-        Elements elements = HtmlParser.getElements("https://www.google.cz/search?q="+key+"&start=", 0, 10, number_of_pages, ".r a");
-        List<String> links = HtmlParser.getAttributes(elements, "href");
-
-        int position = 0;
-
-        for (int i = 0; i < links.size(); i++)
-        {
-            if (links.get(i).contains(url))
-            {
-                position = i + 1;
-            }
-        }
-
-        return position;
-    }
-//http://search.centrum.cz/index.php?q=
-    public int getCentrumPosition(String url, String key, int number_of_pages)
-    {
-        Elements elements = HtmlParser.getElements("http://search.centrum.cz/index.php?q="+key+"&from=", 0, 10, number_of_pages, "h3 a");
-        List<String> links = HtmlParser.getAttributes(elements, "href");
-
-        int position = 0;
-
-        for (int i = 0; i < links.size(); i++)
-        {
-            if (links.get(i).contains(url))
-            {
-                position = i + 1;
-            }
-        }
-
-        return position;
+        //TODO osetrit kdyz pozice bude 0 tedy nenalezeno
+        return message;
     }
 }

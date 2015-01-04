@@ -30,6 +30,9 @@ public class SearchResult {
     private String searchedWord;
     @Column(name = "position")
     private Integer position;
+    @Column(name = "server")
+    @Enumerated(EnumType.STRING)
+    private Server server;
 
     public Long getSearchResultID() {
         return searchResultID;
@@ -69,5 +72,13 @@ public class SearchResult {
 
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
     }
 }

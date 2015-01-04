@@ -9,15 +9,15 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
+import com.ppro.spring.model.Server;
 import com.ppro.spring.service.api.HtmlParserService;
 
 @Service
 public class HtmlParserServiceImpl implements HtmlParserService {
 
 	@Override
-	public int getPosition(String subject, String url, Integer numberOfPages) {
-		// Seznam.cz
-		Elements elements = getElements("http://search.seznam.cz/?q=" + subject + "&count=10&from=", 0, 10, numberOfPages, ".info a");
+	public int getPosition(String subject, String url, Integer numberOfPages, Server server) {
+		Elements elements = getElements(server.getUrl(subject), server.getStart(), server.getIncrement(), numberOfPages, server.getElementSelection());
 		List<String> links = getAttributes(elements, "href");
 
 		for (int i = 0; i < links.size(); i++) {

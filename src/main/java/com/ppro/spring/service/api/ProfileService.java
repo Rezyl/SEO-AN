@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ppro.spring.model.Profile;
 import com.ppro.spring.model.SearchResult;
+import com.ppro.spring.model.Server;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +23,7 @@ public interface ProfileService extends CRUDService<Profile> {
     /**
      * Add new search to Profile
      */
-    void addSearchResult(Profile profileID, String subject, Integer position);
+    void addSearchResult(Profile profileID, String subject, Integer position, Server server);
 
     List<SearchResult> getSearchedResultForSubject(Profile profile, String subject);
 

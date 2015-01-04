@@ -1,5 +1,7 @@
 package com.ppro.spring.service.api;
 
+import com.ppro.spring.model.Server;
+
 /**
  * Created with IntelliJ IDEA.
  * User: lukas
@@ -7,5 +9,5 @@ package com.ppro.spring.service.api;
  */
 public interface HtmlParserService {
 
-    public int getPosition(String subject, String url, Integer numberOfPages);
+    public int getPosition(String subject, String url, Integer numberOfPages, Server server);
 }

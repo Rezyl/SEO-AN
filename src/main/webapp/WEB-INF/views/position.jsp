@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h1>Zjištění pozice</h1>
 
 <form class="pure-form" action="/pozice_zpracuj" method="get">
@@ -7,10 +8,11 @@
         <input type="text" name="url" placeholder="url" value="http://www.auto.cz/" />
         <input type="text" name="key" placeholder="klíčové slovo" value="auto" />
         <input type="text" name="numberOfPage" value="1" />
-        <select name="search_engines">
-            <option value="all">Všechny</option>
-            <option value="seznam_cz" selected="selected">Seznam.cz</option>
-            <option value="google_com">Google.com</option>
+        <select name="serverCode">
+            <c:forEach items="${search_engines}" var="item">
+                <option value="${item.key}">${item.value}</option>
+            </c:forEach>
+            <option value="ALL">Všechny</option>
         </select>
 
         <button type="submit" class="pure-button pure-button-primary">Odeslat</button>

@@ -7,7 +7,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,12 +54,4 @@ public class ProfileController {
         }
         return AppUtils.goToPageByModelAndView(mav, "detailProfile");
     }
-
-    @RequestMapping(value = "/showHistory", method = RequestMethod.GET)
-    public String getDetailOfProfile(Model model,@RequestParam("subject") String subject) {
-        model.addAttribute("subject", subject);
-        return "redirect:detailOfProfile";
-    }
-
-
 }

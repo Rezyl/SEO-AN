@@ -14,6 +14,7 @@ import com.ppro.spring.dao.AbstractDAO;
 import com.ppro.spring.dao.ProfileDAO;
 import com.ppro.spring.model.Profile;
 import com.ppro.spring.model.SearchResult;
+import com.ppro.spring.model.Server;
 import com.ppro.spring.service.api.CRUDService;
 import com.ppro.spring.service.api.ProfileService;
 
@@ -51,12 +52,13 @@ public class ProfileServiceImpl extends AbstractCRUDService<Profile> implements 
     }
 
     @Override
-    public void addSearchResult(Profile profile, String subject, Integer position) {
+    public void addSearchResult(Profile profile, String subject, Integer position, Server server) {
         SearchResult searchResult = new SearchResult();
         searchResult.setCreationDate(new DateTime());
         searchResult.setProfile(profile);
         searchResult.setSearchedWord(subject);
         searchResult.setPosition(position);
+        searchResult.setServer(server);
         //finally add to profile
         profile.getHistoryOfSearch().add(searchResult);
         searchResultService.save(searchResult);

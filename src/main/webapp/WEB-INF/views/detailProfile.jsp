@@ -29,6 +29,7 @@
 <table class="pure-table">
     <thead>
     <tr>
+        <th>Server</th>
         <th>Datum hledání</th>
         <th>Výsledek</th>
     </tr>
@@ -36,6 +37,7 @@
     <tbody>
     <c:forEach items="${mapResults.get(subject)}" var="history">
         <tr>
+            <td>${history.server.getName()}</td>
             <td>${history.creationDate}</td>
             <td>${history.position}</td>
         </tr>
