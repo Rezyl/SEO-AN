@@ -16,7 +16,6 @@
 		<!--[if IE]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-
 	</head>
 
 	<body>
@@ -26,29 +25,24 @@
 			<a href="#" class="logo"><img src="./../../resources/images/logo.png" alt="SEO-AN" /></a>
 			<nav class="pure-menu pure-menu-open">
 				<ul>
-					<li><a href="/">Home</a></li>
-                    <li><a href="/showAllProfiles">Profily</a></li>
-                    <li><a href="/pozice">Pozice</a></li>
-					<li><a href="#">Přihlášení</a></li>
-					<li><a href="#">Validátor</a></li>
-					<li><a href="#">Expirace domény</a></li>
-					<li><a href="#">Další</a></li>
+					<li><a href="/">Úvod</a></li>
+                    <li><a href="#">Přihlášení</a></li>
+                    <li><a href="/profily/">Profily</a></li>
+                    <li><a href="/pozice/">Celková analýza</a></li>
+                    <li><a href="/pozice/">Pozice</a></li>
+					<li><a href="/validita/">Validátor</a></li>
+					<li><a href="/expirace/">Expirace domény</a></li>
+					<li><a href="#">Mapa webu</a></li>
 				</ul>
 			</nav>
 		</div>
 
-
 <!--CONTENT-->
-			<section id="content">
-			
-
-				<article>
-                    <jsp:include page="${pageName}.jsp" flush="true"/>
-				</article>
-			</section>
-		
-
-<!--FOOTER-->	
+		<section id="content">
+			<article>
+                 <jsp:include page="${pageName}.jsp" flush="true"/>
+			</article>
+		</section>
 
 	</body>
 

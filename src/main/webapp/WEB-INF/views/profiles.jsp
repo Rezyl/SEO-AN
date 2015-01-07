@@ -6,13 +6,13 @@
     <table class="pure-table-horizontal">
         <tbody>
         <c:forEach items="${searchResult}" var="item">
-            <c:url var="detailURL" value="/detailOfProfile">
+            <c:url var="detailURL" value="/profil">
                 <c:param name="profileID" value="${item.displayName}"/>
             </c:url>
             <tr>
                 <td><c:out value="${item.displayName}"/></td>
-                <td><a class="button-secondary pure-button" href="${detailURL}">Detail</a></td>
-                <td><a class="button-secondary pure-button" href="/newSearch">Nové hledání</a></td>
+                <td><a class="pure-button button-secondary button-small" href="${detailURL}">Detail</a></td>
+                <td><a class="pure-button button-success button-large" href="/newSearch">Nové hledání</a></td>
             </tr>
         </c:forEach>
         </tbody>

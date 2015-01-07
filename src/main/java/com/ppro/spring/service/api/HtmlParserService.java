@@ -10,4 +10,6 @@ import com.ppro.spring.model.Server;
 public interface HtmlParserService {
 
     public int getPosition(String subject, String url, Integer numberOfPages, Server server);
+    public String checkHtmlValidity(String url);
+    public String checkCssValidity(String url);
 }

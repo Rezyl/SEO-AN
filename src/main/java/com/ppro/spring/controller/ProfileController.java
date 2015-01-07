@@ -29,7 +29,7 @@ public class ProfileController {
     @Qualifier(value = "ProfileService")
     private ProfileService profileService;
 
-    @RequestMapping(value = "/showAllProfiles", method = RequestMethod.GET)
+    @RequestMapping(value = "/profily", method = RequestMethod.GET)
     public ModelAndView getAllProfiles() {
         ModelAndView mav = new ModelAndView();
         final Set<Profile> profiles = profileService.getAll();
@@ -39,7 +39,7 @@ public class ProfileController {
 
     //TODO newSearch">Nové
 
-    @RequestMapping(value = "/detailOfProfile", method = RequestMethod.GET)
+    @RequestMapping(value = "/profil", method = RequestMethod.GET)
     public ModelAndView getDetailOfProfile(@RequestParam("profileID") String profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);

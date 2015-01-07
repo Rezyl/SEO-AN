@@ -14,6 +14,9 @@ import com.ppro.spring.service.api.HtmlParserService;
 import com.ppro.spring.service.api.ProfileService;
 import com.ppro.spring.utils.AppUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 public class PositionController {
 	@Autowired
@@ -33,35 +36,41 @@ public class PositionController {
 
         ModelAndView mav = new ModelAndView();
         //find positions
-        String message = resolvePosition(key, url, Integer.parseInt(numberOfPage), serverCode);
+        Map positions = resolvePosition(key, url, Integer.parseInt(numberOfPage), serverCode);
+
+        String search_engine = Server.valueOf(serverCode).getName();
 
         mav.addObject("subject", key);
-        mav.addObject("message", message);
+        mav.addObject("keyword", key);
+        mav.addObject("search_engine", search_engine);
+        mav.addObject("positions", positions);
         mav.addObject("search_engines", Server.getAll());
-		return AppUtils.goToPageByModelAndView(mav, "results");
+		return AppUtils.goToPageByModelAndView(mav, "position_results");
 	}
 
-    private String resolvePosition(String key, String url, int numberOfPage, String serverCode) {
+    private Map resolvePosition(String key, String url, int numberOfPage, String serverCode) {
         //try load profile
         Profile profile = profileService.loadProfile(url);
-        String message;
+        int position = 0;
+
+        Map<String, Integer> results = new HashMap<String, Integer>();
+        //TODO opravit zjištění pozice pro všechny vyhledávače
         if ("ALL".equals(serverCode)) {
-            StringBuilder sb = new StringBuilder(String.format("Hledané slovo - %s je ve vyhledávači",key));
+            //StringBuilder sb = new StringBuilder(String.format("Hledané slovo - %s je ve vyhledávači",key));
             for (Server server : Server.values()) {
-                int position = htmlParserService.getPosition(key, url, numberOfPage, server);
+                position = htmlParserService.getPosition(key, url, numberOfPage, server);
                 //add result to exist profile
                 profileService.addSearchResult(profile,key,position, server);
-                sb.append(String.format("%n%s na pozici %s.",server.getName(), position));
+                results.put(server.getName(),position);
             }
-            message = sb.toString();
         } else {
             Server server = Server.valueOf(serverCode);
-            int position = htmlParserService.getPosition(key, url, numberOfPage, server);
+            position = htmlParserService.getPosition(key, url, numberOfPage, server);
+            results.put(server.getName(),position);
             //add result to exist profile
             profileService.addSearchResult(profile,key,position, server);
-            message = String.format("Hledané slovo - %s je ve vyhledávači - %s na pozici %s.",key,server.getName(), position);
         }
         //TODO osetrit kdyz pozice bude 0 tedy nenalezeno
-        return message;
+        return results;
     }
 }
