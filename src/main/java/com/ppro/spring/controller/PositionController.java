@@ -1,5 +1,8 @@
 package com.ppro.spring.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +16,6 @@ import com.ppro.spring.model.Server;
 import com.ppro.spring.service.api.HtmlParserService;
 import com.ppro.spring.service.api.ProfileService;
 import com.ppro.spring.utils.AppUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 public class PositionController {
@@ -38,11 +38,12 @@ public class PositionController {
         //find positions
         Map positions = resolvePosition(key, url, Integer.parseInt(numberOfPage), serverCode);
 
-        String search_engine = Server.valueOf(serverCode).getName();
+        //TODO search_engine zatim se nepouziva - Pri vyberu ALL spadne na chybu
+        //String search_engine = Server.valueOf(serverCode).getName();
+        //mav.addObject("search_engine", search_engine);
 
         mav.addObject("subject", key);
         mav.addObject("keyword", key);
-        mav.addObject("search_engine", search_engine);
         mav.addObject("positions", positions);
         mav.addObject("search_engines", Server.getAll());
 		return AppUtils.goToPageByModelAndView(mav, "position_results");
@@ -51,12 +52,10 @@ public class PositionController {
     private Map resolvePosition(String key, String url, int numberOfPage, String serverCode) {
         //try load profile
         Profile profile = profileService.loadProfile(url);
-        int position = 0;
+        int position;
 
         Map<String, Integer> results = new HashMap<String, Integer>();
-        //TODO opravit zjištění pozice pro všechny vyhledávače
         if ("ALL".equals(serverCode)) {
-            //StringBuilder sb = new StringBuilder(String.format("Hledané slovo - %s je ve vyhledávači",key));
             for (Server server : Server.values()) {
                 position = htmlParserService.getPosition(key, url, numberOfPage, server);
                 //add result to exist profile
