@@ -20,41 +20,24 @@
     <thead>
     <tr>
         <th>Klíčové slovo</th>
-        <th>Datum hledání</th>
         <th>Detail</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
-        <c:forEach items="${mapResults.keySet()}" var="key">
-            <tr><td>${key}</td><td>vypsat datum</td><td><a href="?profileID=${profile.displayName}&amp;subject=${key}" class="pure-button button-secondary button-small">Detail</a></td></tr>
-        </c:forEach>
-    </tbody>
-</table>
-
-<hr />
-
-<h1>Detail klíčového slova</h1>
-
-<p>
-    Z tohodle bude lepší udělat další podstránku, která se zobrazí při kliknutí na tlačítko detail v předchozí tabulce.
-    Nahradil jsem select box tabulkou, protože těch slov může být hodně.
-    Bylo by lepší předávat id klíčového slova místo názvu při kliknutí na detail, protože se to pak sere.
-</p>
-
-<table class="pure-table">
-    <thead>
-    <tr>
-        <th>Server</th>
-        <th>Datum hledání</th>
-        <th>Výsledek</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${mapResults.get(subject)}" var="history">
+    <c:forEach items="${mapResults.keySet()}" var="key">
+        <c:url var="getSearchResultURL" value="/getSearchResults">
+            <c:param name="profileID" value="${profile.displayName}"/>
+            <c:param name="subject" value="${key}"/>
+        </c:url>
+        <c:url var="newSearchURL" value="/newSearchKeyword">
+            <c:param name="profileID" value="${profile.displayName}"/>
+            <c:param name="subject" value="${key}"/>
+        </c:url>
         <tr>
-            <td>${history.server.getName()}</td>
-            <td>${history.creationDate}</td>
-            <td>${history.position}</td>
+            <td>${key}</td>
+            <td><a href="${getSearchResultURL}" class="pure-button button-secondary button-small">Detail</a></td>
+            <td><a class="pure-button button-success button-large" href="${newSearchURL}">Nové hledání</a></td>
         </tr>
     </c:forEach>
     </tbody>

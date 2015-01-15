@@ -5,8 +5,8 @@
     <fieldset>
         <legend>A compact inline form</legend>
 
-        <input type="text" name="url" placeholder="url" value="http://www.auto.cz/" />
-        <input type="text" name="key" placeholder="klíčové slovo" value="auto" />
+        <input type="text" name="url" placeholder="url" value="${url}" />
+        <input type="text" name="key" placeholder="klíčové slovo" value="${keyword}" />
         <input type="text" name="numberOfPage" value="1" />
         <select name="serverCode">
             <c:forEach items="${search_engines}" var="item">
