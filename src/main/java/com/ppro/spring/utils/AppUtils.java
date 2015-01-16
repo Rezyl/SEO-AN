@@ -21,6 +21,15 @@ public final class AppUtils {
         return "template";
     }
 
+    public static String validateURL(String url) {
+        
+        if (!url.startsWith("http://")) {
+            url = "http://"+url;
+        }
+
+        return url;
+    }
+
     public static ModelAndView goToPageByModelAndView(ModelAndView mav, String pageName) {
         mav.setViewName("template");
         mav.addObject("pageName", pageName);

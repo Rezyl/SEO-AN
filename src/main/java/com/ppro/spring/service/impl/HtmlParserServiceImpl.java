@@ -62,10 +62,10 @@ public class HtmlParserServiceImpl implements HtmlParserService {
     @Override
     public ArrayList<String> getMap(String url, int level) {
 
-        ArrayList<String> map = new ArrayList<String>();
-        Elements elements = new Elements();
-
         try {
+            ArrayList<String> map = new ArrayList<String>();
+            Elements elements = new Elements();
+
             Document doc = Jsoup.connect(url).get();
             elements.addAll(doc.select("a[href^="+url+"]:not([rel=nofollow])"));
             for (int j = 0; j < elements.size(); j++) {
@@ -77,11 +77,11 @@ public class HtmlParserServiceImpl implements HtmlParserService {
                     map.addAll(getMap(url, level));
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        return map;
+            return map;
+        } catch (IOException e) {
+            return new ArrayList<String>();
+        }
     }
 
     private Element getElement(String url, String element_selection) {

@@ -30,7 +30,7 @@ public class MapController {
 
         ModelAndView mav = new ModelAndView();
 
-        Set<String> map = new HashSet<String>(htmlParserService.getMap(url,level));
+        Set<String> map = new HashSet<String>(htmlParserService.getMap(AppUtils.validateURL(url),level));
 
         mav.addObject("map", map);
         return AppUtils.goToPageByModelAndView(mav, "map_results");
