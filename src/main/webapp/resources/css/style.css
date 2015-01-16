@@ -41,6 +41,16 @@ html, body
  color: #000000;
 }
 
+#account_bar
+{
+ width: 100%;
+ min-width: 460px;
+ max-width: 780px;
+ height: 30px;
+ float: left;
+ text-align: right;
+}
+
 #content
 {
  width: 100%;

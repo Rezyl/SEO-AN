@@ -26,7 +26,6 @@
 			<nav class="pure-menu pure-menu-open">
 				<ul>
 					<li><a href="/">Úvod</a></li>
-                    <li><a href="/login/">Účet</a></li>
                     <li><a href="/profily/">Profily</a></li>
                     <li><a href="/pozice/">Celková analýza</a></li>
                     <li><a href="/pozice/">Pozice</a></li>
@@ -39,6 +38,7 @@
 
 <!--CONTENT-->
 		<section id="content">
+            <span id="account_bar"><a href="ucet/">${userName}</a> | <a href="odhlaseni/">Odhlásit se</a></span>
 			<article>
                  <jsp:include page="${pageName}.jsp" flush="true"/>
 			</article>
