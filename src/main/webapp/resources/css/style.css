@@ -51,6 +51,30 @@ html, body
  text-align: right;
 }
 
+#account_bar #account
+{
+ text-decoration: none;
+ color: #0078e7;
+}
+
+#account_bar #account:hover
+{
+ text-decoration: underline;
+ color: #0056a5;
+}
+
+#account_bar #logout
+{
+ text-decoration: none;
+ color: #ca3c3c;
+}
+
+#account_bar #logout:hover
+{
+ text-decoration: underline;
+ color: #a72020;
+}
+
 #content
 {
  width: 100%;
@@ -138,7 +162,7 @@ html, body
 
 .button-large
 {
- font-size: 110%;
+ font-size: 100%;
 }
 
 .button-xlarge

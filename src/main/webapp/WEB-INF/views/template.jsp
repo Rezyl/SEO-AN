@@ -38,7 +38,7 @@
 
 <!--CONTENT-->
 		<section id="content">
-            <span id="account_bar"><a href="ucet/">${userName}</a> | <a href="odhlaseni/">Odhlásit se</a></span>
+            <span id="account_bar"><a href="ucet/" id="account">${userName}</a> | <a href="odhlaseni/" id="logout">Odhlásit se</a></span>
 			<article>
                  <jsp:include page="${pageName}.jsp" flush="true"/>
 			</article>

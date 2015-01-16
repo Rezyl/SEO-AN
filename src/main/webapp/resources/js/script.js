@@ -7,7 +7,7 @@ $( document ).ready(function() {
 	$('#side_bar').mouseover(function() {
 		$(this).stop(true);
 		$(this).animate({width: '200px'});
-		$(this).animate({height: '400px'});
+		$(this).animate({height: '350px'});
 	});
 
 	$('#side_bar').mouseout(function() {

@@ -14,7 +14,7 @@
 
         <input name="login" id="login" type="text" placeholder="Jméno">
         <input name="password" id="password" type="password" placeholder="Heslo">
-        <button type="submit" class="pure-button pure-button-primary">Přihlásit</button>
+        <button type="submit" class="pure-button pure-button-primary button-large">Přihlásit</button>
 
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>

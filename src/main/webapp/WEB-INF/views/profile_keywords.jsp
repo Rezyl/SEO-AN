@@ -1,27 +1,23 @@
 <%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
-<h1>Detail profilu ${profile.displayName}</h1>
+<header>
+    <h1>Klíčová slova ${profile.displayName}</h1>
+    <a class="pure-button pure-button-primary button-large right" href="/pozice">Přidat klíčové slovo</a>
+</header>
 
 <p>Hledáno na adrese <c:out value="${profile.url}"/></p>
 
 <hr />
 
-<div class="pure-menu pure-menu-open pure-menu-horizontal">
-    <ul>
-        <li class="pure-menu-selected"><a href="klicova_slova/?profileID=${profile.displayName}">Klíčová slova</a></li>
-        <li><a href="#">Stránky</a></li>
-        <li><a href="#">Expirace</a></li>
-    </ul>
-</div>
-
-<hr />
+<%@include file="/WEB-INF/views/profile_navigation.jsp" %>
 
 <table class="pure-table wide">
     <thead>
     <tr>
         <th>Klíčové slovo</th>
         <th>Datum hledání</th>
-        <th>Detail</th>
+        <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -30,6 +26,7 @@
                 <td>${key}</td>
                 <td>vypsat datum</td>
                 <td><a href="/klicove_slovo/?subject=${key}&amp;profileID=${profile.displayName}" class="pure-button button-secondary button-small">Detail</a></td>
+                <td><a class="pure-button button-error button-small" href="">Odstranit</a></td>
             </tr>
         </c:forEach>
     </tbody>
