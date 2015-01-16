@@ -8,13 +8,13 @@
     <div class="msg">${msg}</div>
 </c:if>
 
-<h1>Přihlášení uživatele</h1>
+<h1>Registrace</h1>
 
 <form class="pure-form pure-form-stacked" name='loginForm' action="<c:url value='j_spring_security_check' />" method='POST'>
 
         <input name="login" id="login" type="text" placeholder="Jméno">
         <input name="password" id="password" type="password" placeholder="Heslo">
-        <button type="submit" class="pure-button pure-button-primary">Přihlásit</button>
+        <button type="submit" class="pure-button pure-button-primary">Registrace</button>
 
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
