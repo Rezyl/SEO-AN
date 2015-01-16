@@ -53,6 +53,19 @@ html, body
  background-color: #ffffff;
 }
 
+#content header
+{
+ width: 100%;
+ min-height: 20px;
+ float: left;
+ margin-bottom: 10px;
+}
+
+#content header h1
+{
+ float: left;
+}
+
 #content article h1
 {
  font-weight: bold;
@@ -121,4 +134,19 @@ html, body
 .button-xlarge
 {
  font-size: 125%;
+}
+
+.left
+{
+ float: left;
+}
+
+.right
+{
+ float: right;
+}
+
+.wide
+{
+ width: 100%;
 }

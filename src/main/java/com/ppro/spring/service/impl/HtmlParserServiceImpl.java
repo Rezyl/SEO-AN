@@ -44,6 +44,7 @@ public class HtmlParserServiceImpl implements HtmlParserService {
         return result;
     }
 
+    @Override
     public String checkCssValidity(String url) {
 
         String result;
@@ -56,6 +57,31 @@ public class HtmlParserServiceImpl implements HtmlParserService {
             result = "Nevalidní";
         }
         return result;
+    }
+
+    @Override
+    public ArrayList<String> getMap(String url, int level) {
+
+        ArrayList<String> map = new ArrayList<String>();
+        Elements elements = new Elements();
+
+        try {
+            Document doc = Jsoup.connect(url).get();
+            elements.addAll(doc.select("a[href^="+url+"]:not([rel=nofollow])"));
+            for (int j = 0; j < elements.size(); j++) {
+                String attribute = elements.get(j).attr("href");
+                map.add(attribute);
+
+                if (level >= 0) {
+                    level--;
+                    map.addAll(getMap(url, level));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return map;
     }
 
     private Element getElement(String url, String element_selection) {

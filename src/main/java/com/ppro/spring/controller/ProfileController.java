@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ppro.spring.model.Profile;
 import com.ppro.spring.model.SearchResult;
@@ -38,42 +37,53 @@ public class ProfileController {
         return AppUtils.goToPageByModelAndView(mav, "profiles");
     }
 
-    @RequestMapping(value = "/newSearch", method = RequestMethod.GET)
-    public String newSearchPosition(@RequestParam("profileID") String profileID, RedirectAttributes redirectAttributes) {
-        Profile profile = profileService.getByID(profileID);
-        redirectAttributes.addFlashAttribute("url", profile.getUrl());
-
-        return "redirect:pozice";
-    }
-
-    @RequestMapping(value = "/newSearchKeyword", method = RequestMethod.GET)
-    public String newSearchPositionWithKeyword(@RequestParam("profileID") String profileID,@RequestParam("subject") String keyword, RedirectAttributes redirectAttributes) {
-        Profile profile = profileService.getByID(profileID);
-        redirectAttributes.addFlashAttribute("url", profile.getUrl());
-        redirectAttributes.addFlashAttribute("keyword", keyword);
-
-        return "redirect:pozice";
-    }
+    //TODO newSearch">Nové
 
     @RequestMapping(value = "/profil", method = RequestMethod.GET)
-    public ModelAndView getDetailOfProfile(@RequestParam("profileID") String profileID) {
+    public ModelAndView getDetailOfProfile(@RequestParam("profileID") String profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
         Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
         mav.addObject("profile", profile);
         mav.addObject("mapResults", mapResults);
 
-        return AppUtils.goToPageByModelAndView(mav, "detailProfile");
+        if (subject != null) {
+            mav.addObject("subject", subject);
+        } else if (!mapResults.isEmpty()){
+            mav.addObject("subject", mapResults.keySet().toArray()[0]);
+        }
+        return AppUtils.goToPageByModelAndView(mav, "profile");
     }
 
-    @RequestMapping(value = "/getSearchResults", method = RequestMethod.GET)
-    public ModelAndView getSearchResults(@RequestParam("profileID") String profileID, @RequestParam(value = "subject") String subject) {
+    @RequestMapping(value = "/klicova_slova", method = RequestMethod.GET)
+    public ModelAndView getProfileKeywords(@RequestParam("profileID") String profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
         Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
-
+        mav.addObject("profile", profile);
         mav.addObject("mapResults", mapResults);
-        mav.addObject("subject", subject);
-        return AppUtils.goToPageByModelAndView(mav, "detailSearchResult");
+
+        if (subject != null) {
+            mav.addObject("subject", subject);
+        } else if (!mapResults.isEmpty()){
+            mav.addObject("subject", mapResults.keySet().toArray()[0]);
+        }
+        return AppUtils.goToPageByModelAndView(mav, "profile_keywords");
+    }
+
+    @RequestMapping(value = "/klicove_slovo", method = RequestMethod.GET)
+    public ModelAndView getProfileKeyword(@RequestParam("profileID") String profileID, @RequestParam(value = "subject", required = false) String subject) {
+        ModelAndView mav = new ModelAndView();
+        Profile profile = profileService.getByID(profileID);
+        Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
+        mav.addObject("profile", profile);
+        mav.addObject("mapResults", mapResults);
+
+        if (subject != null) {
+            mav.addObject("subject", subject);
+        } else if (!mapResults.isEmpty()){
+            mav.addObject("subject", mapResults.keySet().toArray()[0]);
+        }
+        return AppUtils.goToPageByModelAndView(mav, "profile_keyword");
     }
 }

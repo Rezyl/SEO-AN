@@ -26,13 +26,13 @@
 			<nav class="pure-menu pure-menu-open">
 				<ul>
 					<li><a href="/">Úvod</a></li>
-                    <li><a href="#">Přihlášení</a></li>
+                    <li><a href="/ucet/">Účet</a></li>
                     <li><a href="/profily/">Profily</a></li>
                     <li><a href="/pozice/">Celková analýza</a></li>
                     <li><a href="/pozice/">Pozice</a></li>
 					<li><a href="/validita/">Validátor</a></li>
 					<li><a href="/expirace/">Expirace domény</a></li>
-					<li><a href="#">Mapa webu</a></li>
+					<li><a href="/mapa/">Mapa webu</a></li>
 				</ul>
 			</nav>
 		</div>

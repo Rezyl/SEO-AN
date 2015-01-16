@@ -2,6 +2,8 @@ package com.ppro.spring.service.api;
 
 import com.ppro.spring.model.Server;
 
+import java.util.ArrayList;
+
 /**
  * Created with IntelliJ IDEA.
  * User: lukas
@@ -12,4 +14,5 @@ public interface HtmlParserService {
     public int getPosition(String subject, String url, Integer numberOfPages, Server server);
     public String checkHtmlValidity(String url);
     public String checkCssValidity(String url);
+    public ArrayList<String> getMap(String url, int level);
 }
