@@ -26,7 +26,7 @@
 			<nav class="pure-menu pure-menu-open">
 				<ul>
 					<li><a href="/">Úvod</a></li>
-                    <li><a href="/ucet/">Účet</a></li>
+                    <li><a href="/login/">Účet</a></li>
                     <li><a href="/profily/">Profily</a></li>
                     <li><a href="/pozice/">Celková analýza</a></li>
                     <li><a href="/pozice/">Pozice</a></li>
