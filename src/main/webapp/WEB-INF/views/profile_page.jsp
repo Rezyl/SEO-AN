@@ -1,20 +1,18 @@
 <%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
-<h1>Detail klíčového slova</h1>
+<ol class="breadcrumb">
+    <li><a href="/profily/">Profily</a></li>
+    <li><a href="/stranky/">Stranky</a></li>
+    <li class="active">Stranka</li>
+</ol>
+
+<h1>Detail stránky</h1>
 
 <p>Hledáno na adrese <c:out value="${profile.url}"/></p>
 
 <hr />
 
-<div class="pure-menu pure-menu-open pure-menu-horizontal">
-    <ul>
-        <li class="pure-menu-selected"><a href="klicova_slova/?profileID=${profile.displayName}">Klíčová slova</a></li>
-        <li><a href="#">Stránky</a></li>
-        <li><a href="#">Expirace</a></li>
-    </ul>
-</div>
-
-<hr />
+<%@include file="/WEB-INF/views/profile_navigation.jsp" %>
 
 <table class="pure-table wide">
     <thead>

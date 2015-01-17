@@ -36,5 +36,5 @@
 </c:if>
 
 <c:if test="${empty searchResult}">
-    <p>Žádný profil nebyl nalezen !</p>
+    <p class="warning">Žádný profil nebyl nalezen.</p>
 </c:if>

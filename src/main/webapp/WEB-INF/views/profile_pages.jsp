@@ -1,6 +1,14 @@
 <%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
-<h1>Detail profilu ${profile.displayName}</h1>
+<ol class="breadcrumb">
+    <li><a href="/profily/">Profily</a></li>
+    <li class="active">Stranky</li>
+</ol>
+
+<header>
+    <h1>Stránky ${profile.displayName}</h1>
+    <a class="pure-button pure-button-primary button-large right" href="/pozice">Importovat stránky</a>
+</header>
 
 <p>Hledáno na adrese <c:out value="${profile.url}"/></p>
 

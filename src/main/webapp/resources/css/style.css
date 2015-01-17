@@ -1,8 +1,12 @@
 
+/*--------------------------------------LAYOUT--------------------------------------*/
+
 html, body
 {
  background-color: #2ba3d4;
 }
+
+/*-----------------SIDEBAR-----------------*/
  
 #side_bar
 {
@@ -41,6 +45,8 @@ html, body
  color: #000000;
 }
 
+/*-----------------ACCOUNT BAR-----------------*/
+
 #account_bar
 {
  width: 100%;
@@ -74,6 +80,8 @@ html, body
  text-decoration: underline;
  color: #a72020;
 }
+
+/*-----------------CONTENT-----------------*/
 
 #content
 {
@@ -119,6 +127,11 @@ html, body
  border: 0;
  border-top: 1px solid #e5e5e5;
 }
+
+
+/*--------------------------------------GENERAL--------------------------------------*/
+
+/*-----------------BUTTONS-----------------*/
 
 .button-success,
 .button-error,
@@ -170,6 +183,8 @@ html, body
  font-size: 125%;
 }
 
+/*-----------------POSITIONS-----------------*/
+
 .left
 {
  float: left;
@@ -183,4 +198,71 @@ html, body
 .wide
 {
  width: 100%;
+}
+
+/*-----------------NAVIGATION-----------------*/
+
+.breadcrumb
+{
+ width: 100%;
+ height: 30px;
+ line-height: 30px;
+ margin: 0px;
+ padding: 0px;
+ float: left;
+}
+
+.breadcrumb li
+{
+ list-style: none;
+ display: inline;
+ margin-right: 5px;
+}
+
+.breadcrumb > li + li:before
+{
+ content: "/\00a0";
+}
+
+.breadcrumb li a
+{
+ text-decoration: none;
+ color: #2ba3d4;
+}
+
+.breadcrumb li a:hover
+{
+ text-decoration: underline;
+}
+
+/*-----------------MESSAGES-----------------*/
+
+.success
+{
+ color: #63b434;
+ font-weight: bold;
+}
+
+.warning
+{
+ color: #ffa900;
+ font-weight: bold;
+}
+
+.error
+{
+ color: #ff0000;
+ font-weight: bold;
+}
+
+/*-----------------INPUTS-----------------*/
+
+.input60
+{
+ width: 60px;
+}
+
+.input460
+{
+ width: 460px;
 }

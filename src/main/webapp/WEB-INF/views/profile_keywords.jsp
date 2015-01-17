@@ -1,5 +1,10 @@
 <%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
+<ol class="breadcrumb">
+    <li><a href="/profily/">Profily</a></li>
+    <li class="active">Klíčová slova</li>
+</ol>
+
 <header>
     <h1>Klíčová slova ${profile.displayName}</h1>
     <a class="pure-button pure-button-primary button-large right" href="/pozice">Přidat klíčové slovo</a>

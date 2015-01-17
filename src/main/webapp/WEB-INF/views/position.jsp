@@ -1,20 +1,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h1>Zjištění pozice</h1>
 
-<form class="pure-form" action="/pozice_zpracuj" method="get">
-    <fieldset>
-        <legend>A compact inline form</legend>
+<form class="pure-form pure-form-aligned" action="/pozice_zpracuj" method="get">
 
-        <input type="text" name="url" placeholder="url" value="${url}" />
-        <input type="text" name="key" placeholder="klíčové slovo" value="${keyword}" />
-        <input type="text" name="numberOfPage" value="1" />
+    <div class="pure-control-group">
+        <label for="url">URL</label>
+        <input type="text" name="url" placeholder="http://" value="${url}" class="input460" required="required" />
+    </div>
+    <div class="pure-control-group">
+        <label for="key">Klíčové slovo</label>
+        <input type="text" name="key" placeholder="klíčové slovo" value="${keyword}" required="required" />
+    </div>
+    <div class="pure-control-group">
+        <label for="numberOfPage">Omezení stránek</label>
+        <input type="text" name="numberOfPage" value="1" class="input60" required="required" />
+    </div>
+    <div class="pure-control-group">
+        <label for="serverCode">Vyhledávače</label>
         <select name="serverCode">
             <c:forEach items="${search_engines}" var="item">
                 <option value="${item.key}">${item.value}</option>
             </c:forEach>
-            <option value="ALL">Všechny</option>
+            <option value="ALL" selected="selected">Vše</option>
         </select>
-
-        <button type="submit" class="pure-button pure-button-primary">Odeslat</button>
-    </fieldset>
+    </div>
+    <div class="pure-control-group">
+        <button type="submit" class="pure-button pure-button-primary" class="center">Odeslat</button>
+    </div>
 </form>
