@@ -28,7 +28,7 @@
 				<ul>
 					<li><a href="/">Úvod</a></li>
                     <li><a href="/profily/">Profily</a></li>
-                    <li><a href="/pozice/">Celková analýza</a></li>
+                    <li><a href="/analyza/">Celková analýza</a></li>
                     <li><a href="/pozice/">Pozice</a></li>
 					<li><a href="/validita/">Validátor</a></li>
 					<li><a href="/expirace/">Expirace domény</a></li>

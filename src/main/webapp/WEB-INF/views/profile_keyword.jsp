@@ -13,7 +13,7 @@
         <canvas id="canvas" style="width: 100%;"></canvas>
     </div>
 
-<script src="./../../resources/js/chart.js"></script>
+<script src="./../../resources/js/chart.min.js"></script>
 
 <script>
     var randomScalingFactor = function(){ return Math.round(Math.random()*100)};

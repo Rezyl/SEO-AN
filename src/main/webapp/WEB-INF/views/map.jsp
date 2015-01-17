@@ -1,10 +1,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h1>Zjištění pozice</h1>
+<h1>Mapa webu</h1>
 
-<form class="pure-form" action="/mapa_zpracuj" method="get">
-    <fieldset>
-        <input type="text" name="url" placeholder="url" value="${url}" />
-        <label>Počet úrovní <input type="text" name="level" value="1" /></label>
+<hr />
+
+<form class="pure-form pure-form-aligned" action="/mapa_zpracuj" method="get">
+
+    <div class="pure-control-group">
+        <label for="url">URL</label>
+        <input type="text" name="url" placeholder="http://" value="${url}" class="input460" required="required" />
+    </div>
+    <div class="pure-control-group">
+        <label for="key">Počet úrovní</label>
+        <input type="text" name="level" value="1" required="required" />
+    </div>
+    <div class="pure-controls">
         <button type="submit" class="pure-button pure-button-primary">Odeslat</button>
-    </fieldset>
+    </div>
 </form>

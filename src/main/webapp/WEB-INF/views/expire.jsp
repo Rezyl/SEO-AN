@@ -1,11 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h1>Ověření expirace domény</h1>
 
-<form class="pure-form" action="/expirace_zpracuj" method="get">
-    <fieldset>
-        <legend>A compact inline form</legend>
+<hr />
 
-        <input type="text" name="url" placeholder="url" value="http://www.auto.cz/" />
+<form class="pure-form pure-form-aligned" action="/expirace_zpracuj" method="get">
+
+    <div class="pure-control-group">
+        <label for="url">URL</label>
+        <input type="text" name="url" placeholder="http://" value="${url}" class="input460" required="required" />
+    </div>
+    <div class="pure-controls">
         <button type="submit" class="pure-button pure-button-primary">Odeslat</button>
-    </fieldset>
+    </div>
 </form>

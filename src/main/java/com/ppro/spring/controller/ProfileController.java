@@ -91,7 +91,7 @@ public class ProfileController {
         }
         return AppUtils.goToPageByModelAndView(mav, "profile_keyword");
     }
-
+/*
     @RequestMapping(value = "/stranky", method = RequestMethod.GET)
     public ModelAndView getProfilePages(@RequestParam("profileID") String profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
@@ -107,4 +107,5 @@ public class ProfileController {
         }
         return AppUtils.goToPageByModelAndView(mav, "profile_pages");
     }
+*/
 }
