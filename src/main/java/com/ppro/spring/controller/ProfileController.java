@@ -91,9 +91,9 @@ public class ProfileController {
         }
         return AppUtils.goToPageByModelAndView(mav, "profile_keyword");
     }
-/*
+
     @RequestMapping(value = "/stranky", method = RequestMethod.GET)
-    public ModelAndView getProfilePages(@RequestParam("profileID") String profileID, @RequestParam(value = "subject", required = false) String subject) {
+    public ModelAndView getProfilePages(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
         Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
@@ -107,5 +107,7 @@ public class ProfileController {
         }
         return AppUtils.goToPageByModelAndView(mav, "profile_pages");
     }
-*/
+
+
+    //TODO dodelat detail stanek
 }

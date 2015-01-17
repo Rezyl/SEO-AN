@@ -28,6 +28,8 @@ public class Page {
     private DateTime creationDate;
     @Column(name = "url")
     private String url;
+    @Column(name = "level")
+    private int level;
 
     public Long getPageID() {
         return pageID;
@@ -59,5 +61,13 @@ public class Page {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

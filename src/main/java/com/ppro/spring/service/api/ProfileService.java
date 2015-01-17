@@ -2,6 +2,7 @@ package com.ppro.spring.service.api;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.ppro.spring.model.Profile;
 import com.ppro.spring.model.SearchResult;
@@ -32,4 +33,5 @@ public interface ProfileService extends CRUDService<Profile> {
      */
     Map<String, List<SearchResult>> getSearchResults(Profile profile);
 
+    void addMapPages(String url, Set<String> result, int level);
 }

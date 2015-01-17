@@ -58,4 +58,13 @@ public enum Server {
         }
         return result;
     }
+
+    public static Server getServerByName(String name) {
+        for (Server server : values()) {
+            if (server.getName().equals(name)) {
+                return server;
+            }
+        }
+        return null;
+    }
 }

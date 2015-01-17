@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ppro.spring.dao.AbstractDAO;
 import com.ppro.spring.dao.ProfileDAO;
-import com.ppro.spring.model.Profile;
-import com.ppro.spring.model.SearchResult;
-import com.ppro.spring.model.Server;
-import com.ppro.spring.model.User;
+import com.ppro.spring.model.*;
 import com.ppro.spring.service.api.CRUDService;
 import com.ppro.spring.service.api.ProfileService;
 import com.ppro.spring.service.api.UserService;
@@ -32,6 +29,10 @@ public class ProfileServiceImpl extends AbstractCRUDService<Profile> implements 
     @Autowired
     @Qualifier("SearchResultService")
     private CRUDService<SearchResult> searchResultService;
+
+    @Autowired
+    @Qualifier("PageService")
+    private CRUDService<Page> pageService;
 
     @Autowired
     private UserService userService;
@@ -102,5 +103,23 @@ public class ProfileServiceImpl extends AbstractCRUDService<Profile> implements 
             result.get(key).add(searchResult);
         }
         return result;
+    }
+
+    @Override
+    public void addMapPages(String url, Set<String> result, int level) {
+        Profile profile = loadProfile(url);
+
+        DateTime creatingDate = new DateTime();
+
+        for (String pageUrl : result) {
+            Page page = new Page();
+            page.setCreationDate(creatingDate);
+            page.setLevel(level);
+            page.setProfile(profile);
+            page.setUrl(pageUrl);
+
+            profile.getPages().add(page);
+            pageService.save(page);
+        }
     }
 }

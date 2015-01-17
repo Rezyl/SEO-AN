@@ -13,6 +13,10 @@
         <label for="key">Počet úrovní</label>
         <input type="text" name="level" value="1" required="required" />
     </div>
+    <div class="pure-control-group">
+        <label for="saveToDB">Uložit do profilu</label>
+        <input type="checkbox" name="saveToDB" checked />
+    </div>
     <div class="pure-controls">
         <button type="submit" class="pure-button pure-button-primary">Odeslat</button>
     </div>

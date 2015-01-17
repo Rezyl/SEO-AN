@@ -32,11 +32,15 @@ public class PositionController {
 	}
 
 	@RequestMapping(value = "/pozice_zpracuj", method = RequestMethod.GET)
-	public ModelAndView getResults(@RequestParam("url") String url, @RequestParam("key") String key, @RequestParam("numberOfPage") String numberOfPage, @RequestParam("serverCode") String serverCode) {
+	public ModelAndView getResults(@RequestParam("url") String url, @RequestParam("key") String key, @RequestParam("numberOfPage") String numberOfPage, @RequestParam("serverCode") String serverCode, @RequestParam(value = "saveToDB", required = false) boolean saveToDB) {
 
         ModelAndView mav = new ModelAndView();
         //find positions
         Map<String, Integer> positions = resolvePosition(key, url, Integer.parseInt(numberOfPage), serverCode);
+        //if user want to save information to profile
+        if (saveToDB) {
+            saveResultPositionsToProfile(positions,key,url);
+        }
 
         mav.addObject("subject", key);
         mav.addObject("keyword", key);
@@ -46,26 +50,30 @@ public class PositionController {
 	}
 
     private Map<String, Integer> resolvePosition(String key, String url, int numberOfPage, String serverCode) {
-        //try load profile
-        Profile profile = profileService.loadProfile(url);
         int position;
 
         Map<String, Integer> results = new HashMap<String, Integer>();
         if ("ALL".equals(serverCode)) {
             for (Server server : Server.values()) {
                 position = htmlParserService.getPosition(key, url, numberOfPage, server);
-                //add result to exist profile
-                profileService.addSearchResult(profile,key,position, server);
                 results.put(server.getName(),position);
             }
         } else {
             Server server = Server.valueOf(serverCode);
             position = htmlParserService.getPosition(key, url, numberOfPage, server);
             results.put(server.getName(),position);
-            //add result to exist profile
-            profileService.addSearchResult(profile,key,position, server);
         }
         //TODO osetrit kdyz pozice bude 0 tedy nenalezeno
         return results;
+    }
+
+    private void saveResultPositionsToProfile(Map<String, Integer> results, String key, String url) {
+        //try load profile
+        Profile profile = profileService.loadProfile(url);
+        for (Map.Entry<String, Integer> mapEntry : results.entrySet()) {
+            Server server = Server.getServerByName(mapEntry.getKey());
+            //add result to exist profile
+            profileService.addSearchResult(profile,key,mapEntry.getValue(), server);
+        }
     }
 }

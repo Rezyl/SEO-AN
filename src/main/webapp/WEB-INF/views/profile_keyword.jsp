@@ -1,3 +1,4 @@
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
 <h1>Detail klíčového slova</h1>
@@ -62,7 +63,8 @@
     <c:forEach items="${mapResults.get(subject)}" var="history">
         <tr>
             <td>${history.server.getName()}</td>
-            <td>${history.creationDate}</td>
+            <joda:format var="creationDate" pattern="dd-MM-yyyy HH:mm" value="${history.creationDate}" style="F-"/>
+            <td><c:out value="${creationDate}"/></td>
             <td>${history.position}</td>
         </tr>
     </c:forEach>
