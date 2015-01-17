@@ -31,4 +31,9 @@ public class FrontController {
             return AppUtils.goToPage(model,"loginPage");
         }
     }
+
+    @RequestMapping(value = "/mobilni_verze", method = RequestMethod.GET)
+    public String position(Model model) {
+        return AppUtils.goToPage(model, "mobile");
+    }
 }

@@ -24,7 +24,7 @@
 <!--NAVIGATION-->
 <c:if test="${not empty userName}">
 		<div id="side_bar">
-			<a href="#" class="logo"><img src="./../../resources/images/logo.png" alt="SEO-AN" /></a>
+			<a href="/mobilni_verze/" class="logo"><img src="./../../resources/images/logo.png" alt="SEO-AN" /></a>
 			<nav class="pure-menu pure-menu-open">
 				<ul>
 					<li><a href="/">Úvod</a></li>

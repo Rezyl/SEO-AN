@@ -7,14 +7,12 @@
 
 <hr />
 
-    <div>
-        <canvas id="canvas" style="width: 100%;"></canvas>
-    </div>
+
+<canvas id="canvas" style="width: 100%;"></canvas>
 
 <script src="./../../resources/js/chart.min.js"></script>
-
 <script>
-    var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+
     var lineChartData = {
         labels : [
             <c:forEach items="${mapResults.get(subject)}" var="history">"${history.creationDate}",</c:forEach>
@@ -29,7 +27,7 @@
                 pointHighlightFill : "#fff",
                 pointHighlightStroke : "rgba(220,220,220,1)",
                 data : [
-<c:forEach items="${mapResults.get(subject)}" var="history">${history.position},</c:forEach>
+                    <c:forEach items="${mapResults.get(subject)}" var="history">${history.position},</c:forEach>
                 ]
             }
         ]
@@ -38,14 +36,16 @@
 
     window.onload = function(){
         var ctx = document.getElementById("canvas").getContext("2d");
-        window.myLine = new Chart(ctx).Line(lineChartData, {
+        var myLineChar = new Chart(ctx).Line(lineChartData, {
             responsive: true
         });
+        <c:forEach items="${mapResults.get(subject)}" var="history">
+        myLineChar.addData([${history.position}], "${history.creationDate}");
+        </c:forEach>
+        window.myLine = myLineChar;
     }
 
-
 </script>
-
 
 
 <table class="pure-table wide">

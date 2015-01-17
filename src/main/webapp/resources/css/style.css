@@ -50,8 +50,7 @@ html, body
 #account_bar
 {
  width: 100%;
- min-width: 460px;
- max-width: 780px;
+
  height: 30px;
  float: left;
  text-align: right;
@@ -111,12 +110,13 @@ html, body
 {
  width: 100%;
  min-width: 460px;
- max-width: 780px;
+ max-width: 1000px;
  min-height: 450px;
  padding: 20px 70px 40px 70px;
  display: block;
  margin: auto;
  background-color: #ffffff;
+ box-sizing: border-box;
 }
 
 #content header
@@ -229,6 +229,7 @@ h1
 .wide
 {
  width: 100%;
+ max-width: 1000px;
 }
 
 /*-----------------NAVIGATION-----------------*/
@@ -242,7 +243,7 @@ h1
  padding: 0px;
  float: left;
  background-color: #f2f2f2;
- border-radius: 2px;
+ border-radius: 3px;
  font-size: 14px;
 }
 

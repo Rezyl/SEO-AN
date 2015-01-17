@@ -4,7 +4,7 @@
 
 <header>
     <h1>Profily</h1>
-    <a class="pure-button pure-button-primary button-large right" href="/pozice">Přidat profil</a>
+    <a class="pure-button pure-button-primary button-large right" href="/pozice/">Přidat profil</a>
 </header>
 
 <c:if test="${! empty searchResult}">

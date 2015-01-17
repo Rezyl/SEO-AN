@@ -65,10 +65,12 @@ public class HtmlParserServiceImpl implements HtmlParserService {
         String result;
 
         try {
+            /*
             Document doc_token = Jsoup.connect("http://www.nic.cz/").get();
             String token = doc_token.select("input:[name=csrfmiddlewaretoken].value").text();
-
-            Document doc = Jsoup.connect("http://www.nic.cz/whois/?d="+url+ "&csrfmiddlewaretoken="+token)
+*/
+            //Document doc = Jsoup.connect("http://www.nic.cz/whois/?d="+url+ "&csrfmiddlewaretoken="+token)
+            Document doc = Jsoup.connect("http://www.nic.cz/whois/?d="+url)
                     .userAgent("Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0")
                     .referrer("http://www.google.com")
                     .get();
