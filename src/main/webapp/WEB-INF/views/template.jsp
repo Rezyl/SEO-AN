@@ -43,7 +43,12 @@
 		<section id="content">
             <c:if test="${not empty userName}">
                 <c:url value="/logout" var="logoutUrl" />
-                <span id="account_bar"><a href="ucet/" id="account">${userName}</a> | <a href="${logoutUrl}" id="logout">Odhlásit se</a></span>
+                <span id="account_bar">
+                    <a href="${logoutUrl}" id="logout">Odhlásit se</a>
+                    <span>|</span>
+                    <a href="ucet/" id="account">${userName}</a>
+                    <a href="ucet/"><img src="./../../resources/images/user.png" alt="user" /></a>
+                </span>
             </c:if>
 			<article>
                  <jsp:include page="${pageName}.jsp" flush="true"/>
