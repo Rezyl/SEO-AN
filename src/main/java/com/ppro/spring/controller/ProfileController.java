@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ppro.spring.model.Profile;
 import com.ppro.spring.model.SearchResult;
+import com.ppro.spring.model.User;
 import com.ppro.spring.service.api.ProfileService;
+import com.ppro.spring.service.api.UserService;
 import com.ppro.spring.utils.AppUtils;
 
 /**
@@ -29,18 +31,21 @@ public class ProfileController {
     @Qualifier(value = "ProfileService")
     private ProfileService profileService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/profily", method = RequestMethod.GET)
     public ModelAndView getAllProfiles() {
         ModelAndView mav = new ModelAndView();
-        final Set<Profile> profiles = profileService.getAll();
+        //all profiles only for logged user
+        User actualUser = userService.getUserByName(AppUtils.getActualLoggedUser());
+        final Set<Profile> profiles = actualUser.getProfiles();
         mav.addObject("searchResult", profiles);
         return AppUtils.goToPageByModelAndView(mav, "profiles");
     }
 
-    //TODO newSearch">Nové
-
     @RequestMapping(value = "/profil", method = RequestMethod.GET)
-    public ModelAndView getDetailOfProfile(@RequestParam("profileID") String profileID, @RequestParam(value = "subject", required = false) String subject) {
+    public ModelAndView getDetailOfProfile(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
         Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
@@ -56,7 +61,7 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/klicova_slova", method = RequestMethod.GET)
-    public ModelAndView getProfileKeywords(@RequestParam("profileID") String profileID, @RequestParam(value = "subject", required = false) String subject) {
+    public ModelAndView getProfileKeywords(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
         Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
@@ -72,7 +77,7 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/klicove_slovo", method = RequestMethod.GET)
-    public ModelAndView getProfileKeyword(@RequestParam("profileID") String profileID, @RequestParam(value = "subject", required = false) String subject) {
+    public ModelAndView getProfileKeyword(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
         Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);

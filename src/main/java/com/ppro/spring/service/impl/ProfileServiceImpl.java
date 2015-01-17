@@ -1,9 +1,6 @@
 package com.ppro.spring.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +12,11 @@ import com.ppro.spring.dao.ProfileDAO;
 import com.ppro.spring.model.Profile;
 import com.ppro.spring.model.SearchResult;
 import com.ppro.spring.model.Server;
+import com.ppro.spring.model.User;
 import com.ppro.spring.service.api.CRUDService;
 import com.ppro.spring.service.api.ProfileService;
+import com.ppro.spring.service.api.UserService;
+import com.ppro.spring.utils.AppUtils;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,6 +33,9 @@ public class ProfileServiceImpl extends AbstractCRUDService<Profile> implements 
     @Qualifier("SearchResultService")
     private CRUDService<SearchResult> searchResultService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     protected AbstractDAO<Profile> getDAOInstance() {
         return profileDAO;
@@ -40,14 +43,24 @@ public class ProfileServiceImpl extends AbstractCRUDService<Profile> implements 
 
     @Override
     public Profile loadProfile(String url) {
-        String profileID = url.replace("http://","");
-        Profile profile = getByID(profileID);
+        Profile profile = profileDAO.getByURL(url);
         if (profile == null) {
-            profile = new Profile();
-            profile.setDisplayName(profileID);
-            profile.setUrl(url);
+            profile = createNewProfile(url);
             save(profile);
         }
+        return profile;
+    }
+
+    private Profile createNewProfile(String url) {
+        Profile profile = new Profile();
+        profile.setUrl(url);
+        String displayName = url.replace("http://","");
+        profile.setDisplayName(displayName);
+
+        profile.setCreationDate(new DateTime());
+
+        final User user = userService.getUserByName(AppUtils.getActualLoggedUser());
+        profile.setUser(user);
         return profile;
     }
 
@@ -66,7 +79,7 @@ public class ProfileServiceImpl extends AbstractCRUDService<Profile> implements 
 
     @Override
     public List<SearchResult> getSearchedResultForSubject(Profile profile, String subject) {
-        List<SearchResult> searchResults = profile.getHistoryOfSearch();
+        Set<SearchResult> searchResults = profile.getHistoryOfSearch();
         List<SearchResult> result = new ArrayList<SearchResult>();
         for (SearchResult searchResult : searchResults) {
             if (subject.equals(searchResult.getSearchedWord())) {

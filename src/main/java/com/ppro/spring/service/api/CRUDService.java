@@ -9,13 +9,13 @@ import java.util.Set;
  */
 public interface CRUDService<T> {
 
-    public T getByID(String id);
+    public T getByID(Long id);
 
     public void save(T type);
 
     public void edit(T type);
 
-    public void delete(String id);
+    public void delete(Long id);
 
     public Set<T> getAll();
 

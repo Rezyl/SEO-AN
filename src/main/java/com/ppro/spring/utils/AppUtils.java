@@ -1,5 +1,8 @@
 package com.ppro.spring.utils;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,6 +16,7 @@ public final class AppUtils {
 
     public static String goToPage(Model model, String pageName) {
         model.addAttribute("pageName", pageName);
+        model.addAttribute("userName", getActualLoggedUser());
         return "template";
     }
 
@@ -33,10 +37,16 @@ public final class AppUtils {
     public static ModelAndView goToPageByModelAndView(ModelAndView mav, String pageName) {
         mav.setViewName("template");
         mav.addObject("pageName", pageName);
+        mav.addObject("userName", getActualLoggedUser());
         return mav;
     }
 
-
-
-
+	public static String getActualLoggedUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return null;
+        } else {
+            return auth.getName();
+        }
+	}
 }

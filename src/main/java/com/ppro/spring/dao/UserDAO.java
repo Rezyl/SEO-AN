@@ -5,7 +5,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ppro.spring.model.Profile;
+import com.ppro.spring.model.User;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,21 +14,21 @@ import com.ppro.spring.model.Profile;
  */
 @Repository
 @Transactional
-public class ProfileDAO extends AbstractDAO<Profile>{
+public class UserDAO extends AbstractDAO<User>{
 
     @Override
-    public Class<Profile> getClazz() {
-        return Profile.class;
+    public Class<User> getClazz() {
+        return User.class;
     }
 
-    public Profile getByURL(String url) {
+    public User getByName(String name) {
         Criteria criteria = getCurrentSession().createCriteria(getClazz());
-        criteria.add(Restrictions.ilike("url", url));
+        criteria.add(Restrictions.ilike("login", name));
 
         if (!criteria.list().isEmpty()) {
             //return first item because url column is unique
-            return (Profile) criteria.list().get(0);
+            return (User) criteria.list().get(0);
         }
-    return null;
+        return null;
     }
 }

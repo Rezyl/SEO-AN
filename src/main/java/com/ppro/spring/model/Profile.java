@@ -1,9 +1,12 @@
 package com.ppro.spring.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,13 +18,27 @@ import javax.persistence.*;
 public class Profile {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "profile_id")
+    private Long profileID;
+
     @Column(name = "display_name")
     private String displayName;
-    @Column(name = "url")
+    @Column(name = "url", unique=true)
     private String url;
+    @Column(name = "creation_date")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime creationDate;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "profile")
-    private List<SearchResult> historyOfSearch = new ArrayList<SearchResult>();
+    private Set<SearchResult> historyOfSearch = new HashSet<SearchResult>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "profile")
+    private Set<Page> pages = new HashSet<Page>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_fk", referencedColumnName = "user_id", nullable = false)
+    private User user;
 
     public String getDisplayName() {
         return displayName;
@@ -39,11 +56,43 @@ public class Profile {
         this.url = url;
     }
 
-    public List<SearchResult> getHistoryOfSearch() {
+    public Set<SearchResult> getHistoryOfSearch() {
         return historyOfSearch;
     }
 
-    public void setHistoryOfSearch(List<SearchResult> historyOfSearch) {
+    public void setHistoryOfSearch(Set<SearchResult> historyOfSearch) {
         this.historyOfSearch = historyOfSearch;
+    }
+
+    public DateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(DateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Set<Page> getPages() {
+        return pages;
+    }
+
+    public void setPages(Set<Page> pages) {
+        this.pages = pages;
+    }
+
+    public Long getProfileID() {
+        return profileID;
+    }
+
+    public void setProfileID(Long profileID) {
+        this.profileID = profileID;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

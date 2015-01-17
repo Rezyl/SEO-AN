@@ -11,13 +11,13 @@ import org.joda.time.DateTime;
  * Date: 1.1.15
  */
 @Entity
-@Table(name = "key_word")
-public class SearchResult {
+@Table(name = "page")
+public class Page {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false)
-    private Long searchResultID;
+    private Long pageID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_fk", referencedColumnName = "profile_id", nullable = false)
@@ -26,20 +26,15 @@ public class SearchResult {
     @Column(name = "creation_date")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime creationDate;
-    @Column(name = "searched_word")
-    private String searchedWord;
-    @Column(name = "position")
-    private Integer position;
-    @Column(name = "server")
-    @Enumerated(EnumType.STRING)
-    private Server server;
+    @Column(name = "url")
+    private String url;
 
-    public Long getSearchResultID() {
-        return searchResultID;
+    public Long getPageID() {
+        return pageID;
     }
 
-    public void setSearchResultID(Long searchResultID) {
-        this.searchResultID = searchResultID;
+    public void setPageID(Long pageID) {
+        this.pageID = pageID;
     }
 
     public Profile getProfile() {
@@ -58,27 +53,11 @@ public class SearchResult {
         this.creationDate = creationDate;
     }
 
-    public String getSearchedWord() {
-        return searchedWord;
+    public String getUrl() {
+        return url;
     }
 
-    public void setSearchedWord(String searchedWord) {
-        this.searchedWord = searchedWord;
-    }
-
-    public Integer getPosition() {
-        return position;
-    }
-
-    public void setPosition(Integer position) {
-        this.position = position;
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
-    public void setServer(Server server) {
-        this.server = server;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

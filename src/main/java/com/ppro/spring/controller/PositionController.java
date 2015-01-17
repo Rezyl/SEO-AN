@@ -36,11 +36,7 @@ public class PositionController {
 
         ModelAndView mav = new ModelAndView();
         //find positions
-        Map positions = resolvePosition(key, url, Integer.parseInt(numberOfPage), serverCode);
-
-        //TODO search_engine zatim se nepouziva - Pri vyberu ALL spadne na chybu
-        //String search_engine = Server.valueOf(serverCode).getName();
-        //mav.addObject("search_engine", search_engine);
+        Map<String, Integer> positions = resolvePosition(key, url, Integer.parseInt(numberOfPage), serverCode);
 
         mav.addObject("subject", key);
         mav.addObject("keyword", key);
@@ -49,7 +45,7 @@ public class PositionController {
 		return AppUtils.goToPageByModelAndView(mav, "position_results");
 	}
 
-    private Map resolvePosition(String key, String url, int numberOfPage, String serverCode) {
+    private Map<String, Integer> resolvePosition(String key, String url, int numberOfPage, String serverCode) {
         //try load profile
         Profile profile = profileService.loadProfile(url);
         int position;

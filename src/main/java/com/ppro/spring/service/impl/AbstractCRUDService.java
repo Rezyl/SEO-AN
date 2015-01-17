@@ -15,7 +15,7 @@ public abstract class AbstractCRUDService<T> implements CRUDService<T> {
 
     protected abstract AbstractDAO<T> getDAOInstance();
 
-    public T getByID(String id) {
+    public T getByID(Long id) {
         return getDAOInstance().getById(id);
     }
 
@@ -27,7 +27,7 @@ public abstract class AbstractCRUDService<T> implements CRUDService<T> {
         getDAOInstance().update(type);
     }
 
-    public void delete(String id){
+    public void delete(Long id){
         getDAOInstance().deleteByID(id);
     }
 

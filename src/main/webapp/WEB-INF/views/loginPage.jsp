@@ -10,11 +10,9 @@
 
 <h1>Přihlášení uživatele</h1>
 
-<form class="pure-form pure-form-stacked" name='loginForm' action="<c:url value='j_spring_security_check' />" method='POST'>
-
+<c:url value='j_spring_security_check' var="login" />
+<form class="pure-form pure-form-stacked" name='loginForm' action="${login}" method='POST'>
         <input name="login" id="login" type="text" placeholder="Jméno">
         <input name="password" id="password" type="password" placeholder="Heslo">
         <button type="submit" class="pure-button pure-button-primary button-large">Přihlásit</button>
-
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>

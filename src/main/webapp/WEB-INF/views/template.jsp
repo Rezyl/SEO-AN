@@ -21,6 +21,7 @@
 	<body>
 
 <!--NAVIGATION-->
+<c:if test="${not empty userName}">
 		<div id="side_bar">
 			<a href="#" class="logo"><img src="./../../resources/images/logo.png" alt="SEO-AN" /></a>
 			<nav class="pure-menu pure-menu-open">
@@ -35,10 +36,14 @@
 				</ul>
 			</nav>
 		</div>
+</c:if>
 
 <!--CONTENT-->
 		<section id="content">
-            <span id="account_bar"><a href="ucet/" id="account">${userName}</a> | <a href="odhlaseni/" id="logout">Odhlásit se</a></span>
+            <c:if test="${not empty userName}">
+                <c:url value="/logout" var="logoutUrl" />
+                <span id="account_bar"><a href="ucet/" id="account">${userName}</a> | <a href="${logoutUrl}" id="logout">Odhlásit se</a></span>
+            </c:if>
 			<article>
                  <jsp:include page="${pageName}.jsp" flush="true"/>
 			</article>

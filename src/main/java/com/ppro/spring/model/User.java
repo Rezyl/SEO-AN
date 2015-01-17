@@ -1,5 +1,8 @@
 package com.ppro.spring.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 /**
@@ -8,19 +11,23 @@ import javax.persistence.*;
  * Date: 6.11.14
  */
 @Entity
-@Table (name = "user_table")
-public class UserTable {
+@Table(name = "user")
+public class User {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "user_id")
     private Long userID;
-    @Column(name = "login")
+    @Column(name = "login", unique=true)
     private String login;
     @Column(name = "password")
     private String password;
     @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Role role;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<Profile> profiles = new HashSet<Profile>();
 
     public Long getUserID() {
         return userID;
@@ -52,5 +59,13 @@ public class UserTable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Set<Profile> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(Set<Profile> profiles) {
+        this.profiles = profiles;
     }
 }
