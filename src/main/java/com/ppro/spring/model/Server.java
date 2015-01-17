@@ -11,7 +11,7 @@ import java.util.Map;
 public enum Server {
     SEZNAM("Seznam.cz","http://search.seznam.cz/?q=","&count=10&from=", 0, 10, ".info a"),
     //    https://www.google.cz/search?q=auto.cz&start=10
-    GOOGLE("Google.com","https://www.google.cz/search?q=", "&start=", 0, 10, ".r a"),
+    GOOGLE("Google.com","https://www.google.cz/search?q=", "&start=", 0, 10, ".srg .r a"),
     //http://search.centrum.cz/index.php?q=
     CENTRUM("Centrum.cz","http://search.centrum.cz/index.php?q=", "&from=", 0, 10, "h3 a");
 

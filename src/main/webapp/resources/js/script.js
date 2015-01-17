@@ -6,14 +6,14 @@ $( document ).ready(function() {
 
 	$('#side_bar').mouseover(function() {
 		$(this).stop(true);
-		$(this).animate({width: '200px'});
-		$(this).animate({height: '350px'});
+		$(this).animate({width: '200px'}, 250);
+		$(this).animate({height: '350px'}, 250);
 	});
 
 	$('#side_bar').mouseout(function() {
 		$(this).stop(true);
-		$(this).animate({height: '60px'});
-		$(this).animate({width: '70px'});
+		$(this).animate({height: '60px'}, 250);
+		$(this).animate({width: '70px'}, 250);
 	});
 })
 

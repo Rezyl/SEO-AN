@@ -61,6 +61,7 @@ html, body
 {
  text-decoration: none;
  color: #0078e7;
+ text-transform: capitalize;
 }
 
 #account_bar #account:hover

@@ -23,18 +23,16 @@ public class ExpireController {
 	public String position(Model model) {
 		return AppUtils.goToPage(model, "expire");
 	}
-/*
+
 	@RequestMapping(value = "/expirace_zpracuj", method = RequestMethod.GET)
-	public ModelAndView getResults(@RequestParam("url") String url) {
+	public ModelAndView getResults(@RequestParam("domain") String domain) {
 
         ModelAndView mav = new ModelAndView();
 
-        String html_validity = htmlParserService.checkHtmlValidity(url);
-        String css_validity = htmlParserService.checkCssValidity(url);
+        String expiration = htmlParserService.checkExpiration(domain);
 
-        mav.addObject("html_validity", html_validity);
-        mav.addObject("css_validity", css_validity);
-		return AppUtils.goToPageByModelAndView(mav, "validity_results");
+        mav.addObject("expiration", expiration);
+		return AppUtils.goToPageByModelAndView(mav, "expire_results");
 	}
-*/
+
 }

@@ -3,7 +3,27 @@
 <jsp:include page="validity.jsp"/>
 
 <hr />
-<h1>Výsledek</h1>
 
-<p>Html validita<c:out value="${html_validity}"/></p>
-<p>Css validita<c:out value="${css_validity}"/></p>
+<h2>Výsledek</h2>
+
+<c:if test="${html_validity == 'Validní'}">
+    <p class="success">
+</c:if>
+
+<c:if test="${html_validity != 'Validní'}">
+    <p class="error">
+</c:if>
+
+Html validita: <c:out value="${html_validity}"/></p>
+
+<c:if test="${css_validity == 'Validní'}">
+    <p class="success">
+</c:if>
+
+<c:if test="${css_validity != 'Validní'}">
+    <p class="error">
+</c:if>
+
+Css validita: <c:out value="${css_validity}"/></p>
+
+

@@ -1,15 +1,21 @@
 <%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
-<h1>Mapa webu</h1>
+<jsp:include page="map.jsp"/>
+
+<hr />
+
+<h2>Výsledek</h2>
+
+<hr />
 
 <p>
     <c:if test="${!empty map}">
         <c:forEach items="${map}" var="item">
-            <c:out value="${item}"/><br />
+            <a href="<c:out value="${item}"/>" target="_blank"><c:out value="${item}"/></a><br />
         </c:forEach>
     </c:if>
 
     <c:if test="${empty map}">
-        <p>Nebyly nalezeny žádné podstránky. Tvar zadané URL adresy se musí shodovat s tvarem URL na prohledávaném webu.</p>
+        <p class="error">Nebyly nalezeny žádné podstránky. Tvar zadané URL adresy se musí shodovat s tvarem URL na prohledávaném webu.</p>
     </c:if>
 </p>

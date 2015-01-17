@@ -60,6 +60,28 @@ public class HtmlParserServiceImpl implements HtmlParserService {
     }
 
     @Override
+    public String checkExpiration(String url) {
+
+        String result;
+
+        try {
+            Document doc_token = Jsoup.connect("http://www.nic.cz/").get();
+            String token = doc_token.select("input:[name=csrfmiddlewaretoken].value").text();
+
+            Document doc = Jsoup.connect("http://www.nic.cz/whois/?d="+url+ "&csrfmiddlewaretoken="+token)
+                    .userAgent("Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0")
+                    .referrer("http://www.google.com")
+                    .get();
+            Element element = doc.select("th:contains(expirace)").first();
+            result = element.text();
+        } catch (IOException e) {
+            result = "Nezjištěno";
+        }
+
+        return result;
+    }
+
+    @Override
     public ArrayList<String> getMap(String url, int level) {
 
         try {
@@ -100,7 +122,11 @@ public class HtmlParserServiceImpl implements HtmlParserService {
 		Elements elements = new Elements();
 		try {
 			for (int i = start; i < number_of_pages; i++) {
-				Document doc = Jsoup.connect(url + (i * increment)).get();
+				//Document doc = Jsoup.connect(url + (i * increment)).get();
+                Document doc = Jsoup.connect(url + (i * increment))
+                        .userAgent("Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0")
+                        .referrer("http://www.google.com")
+                        .get();
 				elements.addAll(doc.select(element_selection));
 			}
 		} catch (IOException e) {

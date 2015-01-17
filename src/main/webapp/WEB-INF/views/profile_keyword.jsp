@@ -7,9 +7,6 @@
 
 <hr />
 
-<%@include file="/WEB-INF/views/profile_navigation.jsp" %>
-
-
     <div>
         <canvas id="canvas" style="width: 100%;"></canvas>
     </div>

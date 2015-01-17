@@ -12,8 +12,6 @@
 
 <hr />
 
-<%@include file="/WEB-INF/views/profile_navigation.jsp" %>
-
 <table class="pure-table wide">
     <thead>
     <tr>

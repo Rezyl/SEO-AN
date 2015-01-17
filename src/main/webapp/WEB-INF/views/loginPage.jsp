@@ -2,10 +2,10 @@
 <jsp:include page="taglibImports.jsp"/>
 
 <c:if test="${not empty error}">
-    <div class="error">${error}</div>
+    <p class="error">${error}</p>
 </c:if>
 <c:if test="${not empty msg}">
-    <div class="msg">${msg}</div>
+    <p class="success">${msg}</p>
 </c:if>
 
 <h1>Přihlášení uživatele</h1>
