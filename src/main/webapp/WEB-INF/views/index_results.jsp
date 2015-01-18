@@ -1,9 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="index.jsp"/>
-
-<hr />
-
 <h2>Stav indexu</h2>
 
 <c:if test="${index_google != 'Nezjištěno'}">

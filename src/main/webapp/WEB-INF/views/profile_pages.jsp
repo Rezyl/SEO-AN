@@ -8,8 +8,7 @@
 
 <header>
     <h1>Stránky ${profile.url}</h1>
-    <%--TODO import--%>
-    <a class="pure-button pure-button-primary button-large right" href="/stranky">Importovat stránky</a>
+    <a class="pure-button pure-button-primary button-large right" href="/profil_stranka/?profileID=${profile.profileID}">Importovat stránky</a>
 </header>
 
 <hr />
@@ -20,7 +19,7 @@
     <thead>
     <tr>
         <th>Datum hledání</th>
-        <th>Level</th>
+        <th>Úroveň</th>
         <th>URL</th>
     </tr>
     </thead>
@@ -37,5 +36,5 @@
 </table>
 </c:if>
 <c:if test="${empty mapPages}">
-    <p class="warning">Žádné klíčové slova nebyly nalezeny.</p>
+    <p class="warning">Žádné stránky nebyly nalezeny.</p>
 </c:if>

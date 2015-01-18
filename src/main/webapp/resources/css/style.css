@@ -11,7 +11,8 @@ html, body
 #side_bar
 {
  overflow: hidden;
- width: 200px;
+ width: 70px;
+ height: 60px;
  float: left;
  background-color: #000000;
  margin-top: 40px;
@@ -292,7 +293,6 @@ h1
 
 /*-----------------INPUTS-----------------*/
 
-
 .input60
 {
  width: 60px;
@@ -301,4 +301,11 @@ h1
 .input460
 {
  width: 460px;
+}
+
+/*-----------------TABLES-----------------*/
+
+.pure-table th
+{
+ font-size: 14px;
 }

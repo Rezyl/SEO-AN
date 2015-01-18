@@ -38,6 +38,6 @@ public class ValidityController {
 
         mav.addObject("html_validity", html_validity);
         mav.addObject("css_validity", css_validity);
-		return AppUtils.goToPageByModelAndView(mav, "validity_results");
+		return AppUtils.goToPageByModelAndView(mav, "validity_combined");
 	}
 }

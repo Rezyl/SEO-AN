@@ -34,7 +34,7 @@ public class IndexController {
 
         mav.addObject("index_google", index_google);
         mav.addObject("index_seznam", index_seznam);
-		return AppUtils.goToPageByModelAndView(mav, "index_results");
+		return AppUtils.goToPageByModelAndView(mav, "index_combined");
 	}
 
 }

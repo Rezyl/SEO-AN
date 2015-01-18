@@ -43,6 +43,6 @@ public class MapController {
         }
 
         mav.addObject("map", map);
-        return AppUtils.goToPageByModelAndView(mav, "map_results");
+        return AppUtils.goToPageByModelAndView(mav, "map_combined");
     }
 }

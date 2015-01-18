@@ -1,10 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="validity.jsp"/>
-
-<hr />
-
-<h2>Výsledek</h2>
+<h2>Validita</h2>
 
 <c:if test="${html_validity == 'Validní'}">
     <p class="success">

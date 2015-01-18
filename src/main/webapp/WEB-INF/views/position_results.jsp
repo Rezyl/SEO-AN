@@ -1,10 +1,6 @@
 <%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
-<jsp:include page="position.jsp"/>
-
-<hr />
-
-<h1>Výsledek</h1>
+<h1>Pozice ve vyhledávačích</h1>
 
 <p>
     Hledané klíčové slovo <b><c:out value="${keyword}"/></b>

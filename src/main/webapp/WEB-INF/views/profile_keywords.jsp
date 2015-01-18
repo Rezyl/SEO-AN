@@ -42,5 +42,5 @@
 </c:if>
 
 <c:if test="${empty mapResults}">
-    <p class="warning">Žádné klíčové slova nebyly nalezeny.</p>
+    <p class="warning">Žádná klíčová slova nebyla nalezena.</p>
 </c:if>

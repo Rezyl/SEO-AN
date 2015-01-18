@@ -49,7 +49,7 @@ public class PositionController {
         mav.addObject("keyword", key);
         mav.addObject("positions", positions);
         mav.addObject("search_engines", Server.getAll());
-		return AppUtils.goToPageByModelAndView(mav, "position_results");
+		return AppUtils.goToPageByModelAndView(mav, "position_combined");
 	}
 
     protected Map<String, Integer> resolvePosition(String key, String url, int numberOfPage, String serverCode) {
