@@ -9,8 +9,8 @@
 
 <hr />
 
-<form class="pure-form pure-form-stacked" action="${login}" method='POST'>
-    <input name="login" id="login" type="text" placeholder="Jméno" value="${login}">
-    <input name="password" id="password" type="password" placeholder="Heslo" value="${password}">
+<form class="pure-form pure-form-stacked" action="${zmenitUdaje}" method='POST'>
+    <input name="login" id="login" type="text" placeholder="Jméno" value="${actualUserName}">
+    <input name="password" id="password" type="password" placeholder="Heslo">
     <button type="submit" class="pure-button pure-button-primary button-large">Změnit</button>
 </form>

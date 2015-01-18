@@ -6,10 +6,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ppro.spring.model.Role;
@@ -23,6 +21,7 @@ import com.ppro.spring.utils.AppUtils;
  * Date: 1.1.15
  */
 @Controller
+@SessionAttributes("updateUser")
 public class UserManagementController {
 
     @Autowired
@@ -68,7 +67,22 @@ public class UserManagementController {
 
     @RequestMapping(value = "/ucet", method = RequestMethod.GET)
     public String account(Model model) {
-
+        model.addAttribute("actualUserName", AppUtils.getActualLoggedUser());
         return AppUtils.goToPage(model, "account");
+    }
+
+    @RequestMapping(value = "/zmenitUdaje", method = RequestMethod.POST)
+    public String changeUser(Model model, @ModelAttribute(value = "updateUser") User user, SessionStatus status) {
+        final String actualLoggedUser = AppUtils.getActualLoggedUser();
+
+        if (user.getLogin().equals(actualLoggedUser)) {
+            userService.edit(user);
+            status.setComplete();
+        } else {
+            String errMes = "Nelze změnit cizí uživatelské údaje";
+            model.addAttribute("error", errMes);
+            return AppUtils.goToPage(model, "account");
+        }
+        return "redirect:profily";
     }
 }

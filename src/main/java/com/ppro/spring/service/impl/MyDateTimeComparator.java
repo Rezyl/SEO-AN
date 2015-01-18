@@ -14,6 +14,6 @@ import com.ppro.spring.model.SearchResult;
 public class MyDateTimeComparator implements Comparator<SearchResult> {
     @Override
     public int compare(SearchResult o1, SearchResult o2) {
-        return DateTimeComparator.getInstance().compare(o1.getCreationDate(), o2.getCreationDate());
+        return DateTimeComparator.getInstance().compare(o2.getCreationDate(), o1.getCreationDate());
     }
 }

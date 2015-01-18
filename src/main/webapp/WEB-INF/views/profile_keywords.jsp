@@ -1,3 +1,4 @@
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
 <ol class="breadcrumb">
@@ -32,7 +33,8 @@
             </c:url>
             <tr>
                 <td>${key}</td>
-                <joda:format var="lastSearch" pattern="dd-MM-yyyy HH:mm" value="${lastSearchDate}" style="F-"/>
+                <%--list of result is sorted by time --%>
+                <joda:format var="lastSearch" pattern="dd-MM-yyyy HH:mm" value="${mapResults.get(key).get(0).creationDate}" style="F-"/>
                 <td><c:out value="${lastSearch}"/></td>
                 <td><a href="/klicove_slovo/?subject=${key}&amp;profileID=${profile.profileID}" class="pure-button button-secondary button-small">Detail</a></td>
                 <td><a class="pure-button button-error button-small" href="${deleteURL}">Odstranit</a></td>

@@ -1,13 +1,9 @@
 package com.ppro.spring.controller;
 
-import com.ppro.spring.model.Page;
-import com.ppro.spring.model.Profile;
-import com.ppro.spring.model.SearchResult;
-import com.ppro.spring.model.User;
-import com.ppro.spring.service.api.CRUDService;
-import com.ppro.spring.service.api.ProfileService;
-import com.ppro.spring.service.api.UserService;
-import com.ppro.spring.utils.AppUtils;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -18,9 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.ppro.spring.model.Page;
+import com.ppro.spring.model.Profile;
+import com.ppro.spring.model.SearchResult;
+import com.ppro.spring.model.User;
+import com.ppro.spring.service.api.CRUDService;
+import com.ppro.spring.service.api.ProfileService;
+import com.ppro.spring.service.api.UserService;
+import com.ppro.spring.utils.AppUtils;
 
 /**
  * Created with IntelliJ IDEA.
@@ -55,7 +56,7 @@ public class ProfileController {
     public ModelAndView getDetailOfProfile(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
-        Map<String, Set<SearchResult>> mapResults = profileService.getSearchResults(profile);
+        Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
         mav.addObject("profile", profile);
         mav.addObject("mapResults", mapResults);
 
@@ -79,12 +80,9 @@ public class ProfileController {
     public ModelAndView getProfileKeywords(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
-        Map<String, Set<SearchResult>> mapResults = profileService.getSearchResults(profile);
+        Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
         mav.addObject("profile", profile);
         mav.addObject("mapResults", mapResults);
-        //TODO
-//        mav.addObject("lastSearchDate", mapResults);
-
 
         if (subject != null) {
             mav.addObject("subject", subject);
@@ -98,7 +96,7 @@ public class ProfileController {
     public ModelAndView getProfileKeyword(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
-        Map<String, Set<SearchResult>> mapResults = profileService.getSearchResults(profile);
+        Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
         mav.addObject("profile", profile);
         mav.addObject("mapResults", mapResults);
 

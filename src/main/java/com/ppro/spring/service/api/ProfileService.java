@@ -31,7 +31,7 @@ public interface ProfileService extends CRUDService<Profile> {
     /**
      * Get map of search results where key is subject and values is history of search
      */
-    Map<String, Set<SearchResult>> getSearchResults(Profile profile);
+    Map<String, List<SearchResult>> getSearchResults(Profile profile);
 
     void addMapPages(String url, Set<String> result, int level);
 }
