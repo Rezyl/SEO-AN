@@ -3,7 +3,8 @@
 
 <ol class="breadcrumb">
     <li><a href="/profily/">Profily</a></li>
-    <li class="active">Stranky</li>
+    <li><a href="/profil?profileID=${profile.profileID}"><c:out value="${profile.url}"/></a></li>
+    <li class="active">Stránky</li>
 </ol>
 
 <header>

@@ -1,6 +1,13 @@
 <%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
+<ol class="breadcrumb">
+    <li><a href="/profily/">Profily</a></li>
+    <li><a href="/profil?profileID=${profile.profileID}"><c:out value="${profile.url}"/></a></li>
+    <li><a href="/klicova_slova/?profileID=${profile.profileID}">Klíčová slova</a></li>
+    <li class="active"><c:out value="${subject}"/></li>
+</ol>
+
 <h1>Detail klíčového slova <c:out value="${subject}"/></h1>
 
 <p>Hledáno na adrese <c:out value="${profile.url}"/></p>
