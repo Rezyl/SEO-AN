@@ -20,40 +20,45 @@
 <script src="./../../resources/js/chart.min.js"></script>
 <script>
 
-    var lineChartData = {
-        labels : [
-            <c:forEach items="${mapResults.get(subject)}" var="history">"${history.creationDate}",</c:forEach>
-        ],
-        datasets : [
-            {
-                label: "My First dataset",
-                fillColor : "rgba(220,220,220,0.2)",
-                strokeColor : "rgba(220,220,220,1)",
-                pointColor : "rgba(220,220,220,1)",
-                pointStrokeColor : "#fff",
-                pointHighlightFill : "#fff",
-                pointHighlightStroke : "rgba(220,220,220,1)",
-                data : [
-                    <c:forEach items="${mapResults.get(subject)}" var="history">${history.position},</c:forEach>
-                ]
-            }
-        ]
+    function createEmptyGraph() {
+        var data = {
+            labels: [],
+            datasets: [
+                {
+                    label: "Dataset",
+                    fillColor: "rgba(220,220,220,0.5)",
+                    strokeColor: "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data: []
+                }
+            ]
+        };
 
+        return data
     }
 
-    window.onload = function(){
-        var ctx = document.getElementById("canvas").getContext("2d");
-        var myLineChar = new Chart(ctx).Line(lineChartData, {
-            responsive: true
-        });
-        <c:forEach items="${mapResults.get(subject)}" var="history">
-        myLineChar.addData([${history.position}], "${history.creationDate}");
-        </c:forEach>
-        window.myLine = myLineChar;
+    var data = createEmptyGraph();
+
+    var ctx = document.getElementById("canvas").getContext("2d");
+
+    // centrum
+    var lineChar = new Chart(ctx).Line(data, {
+        responsive: true
+    });
+    <c:forEach items="${mapResults.get(subject)}" var="history">
+        <joda:format var="creationDate" pattern="dd-MM-yyyy HH:mm" value="${history.creationDate}" style="F-"/>
+
+            lineChar.addData([${history.position}], "${creationDate}");
+
+    </c:forEach>
+
+
+    window.onload = function() {
+        window.myLine = lineChar;
     }
 
 </script>
-
 
 <table class="pure-table wide">
     <thead>

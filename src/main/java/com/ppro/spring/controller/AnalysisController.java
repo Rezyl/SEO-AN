@@ -40,16 +40,8 @@ public class AnalysisController {
         // Pozice
         Map<String, Integer> positions = resolvePosition(key, url, Integer.parseInt(numberOfPage), serverCode);
 
-        if (saveToDB) {
-            saveResultPositionsToProfile(positions,key,url);
-        }
-
         // Mapa
         Set<String> map = new HashSet<String>(htmlParserService.getMap(AppUtils.validateURL(url),level));
-
-        if (saveToDB) {
-            profileService.addMapPages(url,map,level);
-        }
 
         // Validita
         String html_validity = htmlParserService.checkHtmlValidity(url);
@@ -85,17 +77,6 @@ public class AnalysisController {
             position = htmlParserService.getPosition(key, url, numberOfPage, server);
             results.put(server.getName(),position);
         }
-        //TODO osetrit kdyz pozice bude 0 tedy nenalezeno
         return results;
-    }
-
-    protected void saveResultPositionsToProfile(Map<String, Integer> results, String key, String url) {
-        //try load profile
-        Profile profile = profileService.loadProfile(url);
-        for (Map.Entry<String, Integer> mapEntry : results.entrySet()) {
-            Server server = Server.getServerByName(mapEntry.getKey());
-            //add result to exist profile
-            profileService.addSearchResult(profile,key,mapEntry.getValue(), server);
-        }
     }
 }

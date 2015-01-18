@@ -66,7 +66,7 @@ public class PositionController {
             position = htmlParserService.getPosition(key, url, numberOfPage, server);
             results.put(server.getName(),position);
         }
-        //TODO osetrit kdyz pozice bude 0 tedy nenalezeno
+
         return results;
     }
 
@@ -76,7 +76,9 @@ public class PositionController {
         for (Map.Entry<String, Integer> mapEntry : results.entrySet()) {
             Server server = Server.getServerByName(mapEntry.getKey());
             //add result to exist profile
-            profileService.addSearchResult(profile,key,mapEntry.getValue(), server);
+            if (mapEntry.getValue() >= 0) {
+                profileService.addSearchResult(profile,key,mapEntry.getValue(), server);
+            }
         }
     }
 }
