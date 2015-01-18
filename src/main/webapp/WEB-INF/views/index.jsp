@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h1>Ověření expirace domény .cz</h1>
+<h1>Zjištění stavu indexu</h1>
 
 <hr />
 
-<form class="pure-form pure-form-aligned" action="/expirace_zpracuj" method="get">
+<form class="pure-form pure-form-aligned" action="/index_zpracuj" method="get">
 
     <div class="pure-control-group">
         <label for="domain">Název domény</label>

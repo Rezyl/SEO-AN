@@ -60,24 +60,44 @@ public class HtmlParserServiceImpl implements HtmlParserService {
     }
 
     @Override
-    public String checkExpiration(String url) {
-
+    public String checkIndex(String url, String search_engine) {
         String result;
+        Element element;
 
-        try {
-            /*
-            Document doc_token = Jsoup.connect("http://www.nic.cz/").get();
-            String token = doc_token.select("input:[name=csrfmiddlewaretoken].value").text();
-*/
-            //Document doc = Jsoup.connect("http://www.nic.cz/whois/?d="+url+ "&csrfmiddlewaretoken="+token)
-            Document doc = Jsoup.connect("http://www.nic.cz/whois/?d="+url)
-                    .userAgent("Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0")
-                    .referrer("http://www.google.com")
-                    .get();
-            Element element = doc.select("th:contains(expirace)").first();
-            result = element.text();
-        } catch (IOException e) {
-            result = "Nezjištěno";
+        if (search_engine.equals("google")) {
+            Document doc = download("https://www.google.cz/search?q=site:"+url);
+            if (doc != null) {
+                element = doc.select("#resultStats").first();
+                if (element != null) {
+                    result = element.text().replace("Přibližný počet výsledků: ","");
+                    int resind = result.indexOf("(");
+                    if (resind > 0) {
+                        result = result.substring(0,resind);
+                    }
+                }
+                else {
+                    result = "Nezjištěno";
+                }
+            }
+            else {
+                result = "Nezjištěno";
+            }
+        }
+        else
+        {
+            Document doc = download("http://search.seznam.cz/?q=host:"+url);
+            if (doc != null) {
+                element = doc.select("#resultCount > strong:eq(2)").first();
+                if (element != null) {
+                    result = element.text();
+                }
+                else {
+                    result = "Nezjištěno";
+                }
+            }
+            else {
+                result = "Nezjištěno";
+            }
         }
 
         return result;
@@ -154,4 +174,15 @@ public class HtmlParserServiceImpl implements HtmlParserService {
 
 		return attributes_array;
 	}
+
+    private Document download(String url) {
+
+        try {
+            Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0").referrer("http://www.google.com").get();
+            return doc;
+        } catch (IOException e) {
+            return null;
+        }
+
+    }
 }

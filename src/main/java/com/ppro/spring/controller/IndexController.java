@@ -12,27 +12,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class ExpireController {
+public class IndexController {
 	@Autowired
 	private HtmlParserService htmlParserService;
 
 	@Autowired
 	private ProfileService profileService;
 
-	@RequestMapping(value = "/expirace", method = RequestMethod.GET)
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String position(Model model) {
-		return AppUtils.goToPage(model, "expire");
+		return AppUtils.goToPage(model, "index");
 	}
 
-	@RequestMapping(value = "/expirace_zpracuj", method = RequestMethod.GET)
+	@RequestMapping(value = "/index_zpracuj", method = RequestMethod.GET)
 	public ModelAndView getResults(@RequestParam("domain") String domain) {
 
         ModelAndView mav = new ModelAndView();
 
-        String expiration = htmlParserService.checkExpiration(domain);
+        String index_google = htmlParserService.checkIndex(domain,"google");
+        String index_seznam = htmlParserService.checkIndex(domain,"seznam");
 
-        mav.addObject("expiration", expiration);
-		return AppUtils.goToPageByModelAndView(mav, "expire_results");
+        mav.addObject("index_google", index_google);
+        mav.addObject("index_seznam", index_seznam);
+		return AppUtils.goToPageByModelAndView(mav, "index_results");
 	}
 
 }
