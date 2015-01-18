@@ -150,7 +150,4 @@ public class ProfileController {
         Profile profile = profileService.getByID(profileID);
         return "redirect:/mapa?url="+profile.getUrl();
     }
-
-
-    //TODO dodelat detail stanek
 }

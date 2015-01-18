@@ -16,7 +16,7 @@ public class SearchResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, name = "key_word_id")
     private Long searchResultID;
 
     @ManyToOne(fetch = FetchType.LAZY)

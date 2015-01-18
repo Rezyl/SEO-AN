@@ -1,6 +1,6 @@
 package com.ppro.spring.model;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -27,7 +27,8 @@ public class User {
     private Role role;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<Profile> profiles = new HashSet<Profile>();
+    @OrderBy
+    private Set<Profile> profiles = new LinkedHashSet<Profile>();
 
     public Long getUserID() {
         return userID;

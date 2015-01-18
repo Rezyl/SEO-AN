@@ -1,6 +1,6 @@
 package com.ppro.spring.model;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -31,10 +31,12 @@ public class Profile {
     private DateTime creationDate;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "profile")
-    private Set<SearchResult> historyOfSearch = new HashSet<SearchResult>();
+    @OrderBy
+    private Set<SearchResult> historyOfSearch = new LinkedHashSet<SearchResult>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "profile")
-    private Set<Page> pages = new HashSet<Page>();
+    @OrderBy
+    private Set<Page> pages = new LinkedHashSet<Page>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_fk", referencedColumnName = "user_id", nullable = false)

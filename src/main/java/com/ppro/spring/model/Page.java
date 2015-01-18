@@ -16,7 +16,7 @@ public class Page {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, name = "page_id")
     private Long pageID;
 
     @ManyToOne(fetch = FetchType.LAZY)
