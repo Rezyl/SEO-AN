@@ -25,12 +25,12 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/index_zpracuj", method = RequestMethod.GET)
-	public ModelAndView getResults(@RequestParam("domain") String domain) {
+	public ModelAndView getResults(@RequestParam("url") String url) {
 
         ModelAndView mav = new ModelAndView();
 
-        String index_google = htmlParserService.checkIndex(domain,"google");
-        String index_seznam = htmlParserService.checkIndex(domain,"seznam");
+        String index_google = htmlParserService.checkIndex(url,"google");
+        String index_seznam = htmlParserService.checkIndex(url,"seznam");
 
         mav.addObject("index_google", index_google);
         mav.addObject("index_seznam", index_seznam);

@@ -16,46 +16,59 @@ import com.ppro.spring.service.api.HtmlParserService;
 @Service
 public class HtmlParserServiceImpl implements HtmlParserService {
 
-	@Override
-	public int getPosition(String subject, String url, Integer numberOfPages, Server server) {
-		Elements elements = getElements(server.getUrl(subject), server.getStart(), server.getIncrement(), numberOfPages, server.getElementSelection());
-		List<String> links = getAttributeFromElements(elements, "href");
-
-		for (int i = 0; i < links.size(); i++) {
-			if (links.get(i).equals(url)) {
-				return i + 1;
-			}
-		}
-		return 0;
-	}
-
     @Override
     public String checkHtmlValidity(String url) {
-
         String result;
-        Element element = getElement("http://validator.w3.org/check?uri="+url, "td[class=valid]");
+        Element element_valid = null;
+        Element element_invalid = null;
 
-        if (element != null) {
+        Document doc = download("http://validator.w3.org/check?uri="+url);
+        if (doc != null) {
+            element_valid = doc.select("td[class=valid]").first();
+        }
+
+        if (doc != null) {
+            element_invalid = doc.select("td[class=invalid]").first();
+        }
+
+        if (element_valid != null) {
             result = "Validní";
         }
-        else {
+        else if (element_invalid != null) {
             result = "Nevalidní";
         }
+        else {
+            result = "Nezjištěno";
+        }
+
         return result;
     }
 
     @Override
     public String checkCssValidity(String url) {
-
         String result;
-        Element element = getElement("http://jigsaw.w3.org/css-validator/validator?uri="+url, "div[id=congrats]");
+        Element element_valid = null;
+        Element element_invalid = null;
 
-        if (element != null) {
+        Document doc = download("http://jigsaw.w3.org/css-validator/validator?uri="+url);
+        if (doc != null) {
+            element_valid = doc.select("div[id=congrats]").first();
+        }
+
+        if (doc != null) {
+            element_invalid = doc.select("div[id=errors]").first();
+        }
+
+        if (element_valid != null) {
             result = "Validní";
         }
-        else {
+        else if (element_invalid != null) {
             result = "Nevalidní";
         }
+        else {
+            result = "Nezjištěno";
+        }
+
         return result;
     }
 
@@ -105,12 +118,11 @@ public class HtmlParserServiceImpl implements HtmlParserService {
 
     @Override
     public ArrayList<String> getMap(String url, int level) {
+        ArrayList<String> map = new ArrayList<String>();
+        Elements elements = new Elements();
 
-        try {
-            ArrayList<String> map = new ArrayList<String>();
-            Elements elements = new Elements();
-
-            Document doc = Jsoup.connect(url).get();
+        Document doc = download(url);
+        if (doc != null) {
             elements.addAll(doc.select("a[href^="+url+"]:not([rel=nofollow])"));
             for (int j = 0; j < elements.size(); j++) {
                 String attribute = elements.get(j).attr("href");
@@ -121,48 +133,44 @@ public class HtmlParserServiceImpl implements HtmlParserService {
                     map.addAll(getMap(url, level));
                 }
             }
-
-            return map;
-        } catch (IOException e) {
-            return new ArrayList<String>();
         }
+
+        return map;
     }
 
-    private Element getElement(String url, String element_selection) {
-        Element element = null;
-        try {
-            Document doc = Jsoup.connect(url).get();
-            element = doc.select(element_selection).first();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public int getPosition(String subject, String url, Integer numberOfPages, Server server) {
+        Elements elements = getElements(server.getUrl(subject), server.getStart(), server.getIncrement(), numberOfPages, server.getElementSelection());
 
-        return element;
+        if (!elements.isEmpty()) {
+            List<String> links = getAttributeFromElements(elements, "href");
+
+            if (!links.isEmpty()) {
+                for (int i = 0; i < links.size(); i++) {
+                    if (links.get(i).contains(url)) {
+                        return i + 1;
+                    }
+                }
+            }
+            return -2;
+        }
+        else {
+            return -1;
+        }
     }
 
 	private Elements getElements(String url, int start, int increment, int number_of_pages, String element_selection) {
 		Elements elements = new Elements();
-		try {
-			for (int i = start; i < number_of_pages; i++) {
-				//Document doc = Jsoup.connect(url + (i * increment)).get();
-                Document doc = Jsoup.connect(url + (i * increment))
-                        .userAgent("Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0")
-                        .referrer("http://www.google.com")
-                        .get();
-				elements.addAll(doc.select(element_selection));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		for (int i = start; i < number_of_pages; i++) {
+            Document doc = download(url + (i * increment));
+            if (doc != null) {
+                elements.addAll(doc.select(element_selection));
+            }
+        }
 
 		return elements;
 	}
-
-    private String getAttributeFromElement(Element element, String attribute_selection) {
-        String attribute = element.attr(attribute_selection);
-
-        return attribute;
-    }
 
 	private ArrayList<String> getAttributeFromElements(Elements elements, String attribute_selection) {
 		ArrayList<String> attributes_array = new ArrayList<String>();
@@ -175,6 +183,7 @@ public class HtmlParserServiceImpl implements HtmlParserService {
 		return attributes_array;
 	}
 
+    // stažení dokumentu z URL
     private Document download(String url) {
 
         try {

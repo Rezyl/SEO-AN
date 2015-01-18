@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class AnalysisController {
@@ -31,40 +33,69 @@ public class AnalysisController {
 	}
 
 	@RequestMapping(value = "/analyza_zpracuj", method = RequestMethod.GET)
-	public ModelAndView getResults(@RequestParam("url") String url, @RequestParam("key") String key, @RequestParam("numberOfPage") String numberOfPage, @RequestParam("serverCode") String serverCode) {
+    public ModelAndView getResults(@RequestParam("url") String url, @RequestParam("key") String key, @RequestParam("level") int level, @RequestParam("numberOfPage") String numberOfPage, @RequestParam("serverCode") String serverCode, @RequestParam(value = "saveToDB", required = false) boolean saveToDB) {
 
         ModelAndView mav = new ModelAndView();
-        //find positions
+
+        // Pozice
         Map<String, Integer> positions = resolvePosition(key, url, Integer.parseInt(numberOfPage), serverCode);
 
+        if (saveToDB) {
+            saveResultPositionsToProfile(positions,key,url);
+        }
+
+        // Mapa
+        Set<String> map = new HashSet<String>(htmlParserService.getMap(AppUtils.validateURL(url),level));
+
+        if (saveToDB) {
+            profileService.addMapPages(url,map,level);
+        }
+
+        // Validita
+        String html_validity = htmlParserService.checkHtmlValidity(url);
+        String css_validity = htmlParserService.checkCssValidity(url);
+
+        // Index
+        String index_google = htmlParserService.checkIndex(url,"google");
+        String index_seznam = htmlParserService.checkIndex(url,"seznam");
+
+        mav.addObject("index_google", index_google);
+        mav.addObject("index_seznam", index_seznam);
+        mav.addObject("html_validity", html_validity);
+        mav.addObject("css_validity", css_validity);
+        mav.addObject("map", map);
         mav.addObject("subject", key);
         mav.addObject("keyword", key);
         mav.addObject("positions", positions);
         mav.addObject("search_engines", Server.getAll());
-		return AppUtils.goToPageByModelAndView(mav, "position_results");
+		return AppUtils.goToPageByModelAndView(mav, "analysis_results");
 	}
 
-    private Map<String, Integer> resolvePosition(String key, String url, int numberOfPage, String serverCode) {
-        //try load profile
-        Profile profile = profileService.loadProfile(url);
+    protected Map<String, Integer> resolvePosition(String key, String url, int numberOfPage, String serverCode) {
         int position;
 
         Map<String, Integer> results = new HashMap<String, Integer>();
         if ("ALL".equals(serverCode)) {
             for (Server server : Server.values()) {
                 position = htmlParserService.getPosition(key, url, numberOfPage, server);
-                //add result to exist profile
-                profileService.addSearchResult(profile,key,position, server);
                 results.put(server.getName(),position);
             }
         } else {
             Server server = Server.valueOf(serverCode);
             position = htmlParserService.getPosition(key, url, numberOfPage, server);
             results.put(server.getName(),position);
-            //add result to exist profile
-            profileService.addSearchResult(profile,key,position, server);
         }
         //TODO osetrit kdyz pozice bude 0 tedy nenalezeno
         return results;
+    }
+
+    protected void saveResultPositionsToProfile(Map<String, Integer> results, String key, String url) {
+        //try load profile
+        Profile profile = profileService.loadProfile(url);
+        for (Map.Entry<String, Integer> mapEntry : results.entrySet()) {
+            Server server = Server.getServerByName(mapEntry.getKey());
+            //add result to exist profile
+            profileService.addSearchResult(profile,key,mapEntry.getValue(), server);
+        }
     }
 }

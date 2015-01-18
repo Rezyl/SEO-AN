@@ -35,9 +35,10 @@ public class PositionController {
 	public ModelAndView getResults(@RequestParam("url") String url, @RequestParam("key") String key, @RequestParam("numberOfPage") String numberOfPage, @RequestParam("serverCode") String serverCode, @RequestParam(value = "saveToDB", required = false) boolean saveToDB) {
 
         ModelAndView mav = new ModelAndView();
-        //find positions
+
         Map<String, Integer> positions = resolvePosition(key, url, Integer.parseInt(numberOfPage), serverCode);
-        //if user want to save information to profile
+
+        //if user wants to save information to profile
         if (saveToDB) {
             saveResultPositionsToProfile(positions,key,url);
         }
@@ -49,7 +50,7 @@ public class PositionController {
 		return AppUtils.goToPageByModelAndView(mav, "position_results");
 	}
 
-    private Map<String, Integer> resolvePosition(String key, String url, int numberOfPage, String serverCode) {
+    protected Map<String, Integer> resolvePosition(String key, String url, int numberOfPage, String serverCode) {
         int position;
 
         Map<String, Integer> results = new HashMap<String, Integer>();
@@ -67,7 +68,7 @@ public class PositionController {
         return results;
     }
 
-    private void saveResultPositionsToProfile(Map<String, Integer> results, String key, String url) {
+    protected void saveResultPositionsToProfile(Map<String, Integer> results, String key, String url) {
         //try load profile
         Profile profile = profileService.loadProfile(url);
         for (Map.Entry<String, Integer> mapEntry : results.entrySet()) {
