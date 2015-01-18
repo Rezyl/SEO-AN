@@ -6,11 +6,9 @@
 </ol>
 
 <header>
-    <h1>Stránky ${profile.displayName}</h1>
-    <a class="pure-button pure-button-primary button-large right" href="/pozice">Importovat stránky</a>
+    <h1>Stránky ${profile.url}</h1>
+    <a class="pure-button pure-button-primary button-large right" href="/profil_stranka/?profileID=${profile.profileID}">Importovat stránky</a>
 </header>
-
-<p>Hledáno na adrese <c:out value="${profile.url}"/></p>
 
 <hr />
 

@@ -25,7 +25,7 @@
                 <c:param name="profileID" value="${item.profileID}"/>
             </c:url>
             <tr>
-                <td><c:out value="${item.displayName}"/></td>
+                <td><c:out value="${item.url}"/></td>
                 <joda:format var="creationDate" pattern="dd-MM-yyyy HH:mm" value="${item.creationDate}" style="F-"/>
                 <td><c:out value="${creationDate}"/></td>
                 <td><c:out value="${fn:length(item.historyOfSearch)}"/></td>

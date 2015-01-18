@@ -27,7 +27,6 @@
 			<a href="/mobilni_verze/" class="logo"><img src="./../../resources/images/logo.png" alt="SEO-AN" /></a>
 			<nav class="pure-menu pure-menu-open">
 				<ul>
-					<li><a href="/">Úvod</a></li>
                     <li><a href="/profily/">Profily</a></li>
                     <li><a href="/analyza/">Celková analýza</a></li>
                     <li><a href="/pozice/">Pozice</a></li>

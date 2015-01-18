@@ -5,9 +5,7 @@
     <li class="active">Profil</li>
 </ol>
 
-<h1>Detail profilu ${profile.displayName}</h1>
-
-<p>Hledáno na adrese <c:out value="${profile.url}"/></p>
+<h1>Detail profilu ${profile.url}</h1>
 
 <hr />
 

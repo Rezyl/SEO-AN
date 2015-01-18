@@ -1,7 +1,7 @@
 <%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@include file="/WEB-INF/views/taglibImports.jsp" %>
 
-<h1>Detail klíčového slova</h1>
+<h1>Detail klíčového slova <c:out value="${subject}"/></h1>
 
 <p>Hledáno na adrese <c:out value="${profile.url}"/></p>
 

@@ -6,11 +6,9 @@
 </ol>
 
 <header>
-    <h1>Klíčová slova ${profile.displayName}</h1>
-    <a class="pure-button pure-button-primary button-large right" href="/pozice">Přidat klíčové slovo</a>
+    <h1>Klíčová slova ${profile.url}</h1>
+    <a class="pure-button pure-button-primary button-large right" href="/profil_klicove_slovo/?profileID=${profile.profileID}">Přidat klíčové slovo</a>
 </header>
-
-<p>Hledáno na adrese <c:out value="${profile.url}"/></p>
 
 <hr />
 

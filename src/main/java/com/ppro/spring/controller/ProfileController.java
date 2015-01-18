@@ -108,6 +108,27 @@ public class ProfileController {
         return AppUtils.goToPageByModelAndView(mav, "profile_pages");
     }
 
+    @RequestMapping(value = "/profil_index", method = RequestMethod.GET)
+    public String getProfileIndex(@RequestParam("profileID") Long profileID) {
+        ModelAndView mav = new ModelAndView();
+        Profile profile = profileService.getByID(profileID);
+        return "redirect:/index_zpracuj?url="+profile.getUrl();
+    }
+
+    @RequestMapping(value = "/profil_klicove_slovo", method = RequestMethod.GET)
+    public String getProfileKeyword(@RequestParam("profileID") Long profileID) {
+        ModelAndView mav = new ModelAndView();
+        Profile profile = profileService.getByID(profileID);
+        return "redirect:/pozice?url="+profile.getUrl();
+    }
+
+    @RequestMapping(value = "/profil_stranka", method = RequestMethod.GET)
+    public String getProfilePage(@RequestParam("profileID") Long profileID) {
+        ModelAndView mav = new ModelAndView();
+        Profile profile = profileService.getByID(profileID);
+        return "redirect:/mapa?url="+profile.getUrl();
+    }
+
 
     //TODO dodelat detail stanek
 }

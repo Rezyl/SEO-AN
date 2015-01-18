@@ -26,9 +26,11 @@ public class PositionController {
 	private ProfileService profileService;
 
 	@RequestMapping(value = "/pozice", method = RequestMethod.GET)
-	public String position(Model model) {
-        model.addAttribute("search_engines", Server.getAll());
-		return AppUtils.goToPage(model, "position");
+	public ModelAndView position(@RequestParam("url") String url) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("url", url);
+        mav.addObject("search_engines", Server.getAll());
+        return AppUtils.goToPageByModelAndView(mav, "position");
 	}
 
 	@RequestMapping(value = "/pozice_zpracuj", method = RequestMethod.GET)
