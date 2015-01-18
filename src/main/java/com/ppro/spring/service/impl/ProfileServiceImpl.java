@@ -91,14 +91,14 @@ public class ProfileServiceImpl extends AbstractCRUDService<Profile> implements 
     }
 
     @Override
-    public Map<String, List<SearchResult>> getSearchResults(Profile profile) {
-        Map<String, List<SearchResult>> result = new HashMap<String, List<SearchResult>>();
+    public Map<String, Set<SearchResult>> getSearchResults(Profile profile) {
+        Map<String, Set<SearchResult>> result = new HashMap<String, Set<SearchResult>>();
 
         for (SearchResult searchResult : profile.getHistoryOfSearch()) {
             String key = searchResult.getSearchedWord();
 
             if (!result.containsKey(key)) {
-                result.put(key,new ArrayList<SearchResult>());
+                result.put(key,new TreeSet<SearchResult>(new MyDateTimeComparator()));
             }
             result.get(key).add(searchResult);
         }

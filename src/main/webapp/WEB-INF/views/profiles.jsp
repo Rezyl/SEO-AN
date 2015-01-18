@@ -7,6 +7,9 @@
     <a class="pure-button pure-button-primary button-large right" href="/pozice/">Přidat profil</a>
 </header>
 
+<c:if test="${deleted}">
+    <p class="success">Úspěšně odstraněno.</p>
+</c:if>
 <c:if test="${! empty searchResult}">
     <table class="pure-table pure-table-bordered wide">
         <thead>
@@ -24,6 +27,9 @@
             <c:url var="detailURL" value="/profil">
                 <c:param name="profileID" value="${item.profileID}"/>
             </c:url>
+            <c:url var="deleteURL" value="/odstranitProfil">
+                <c:param name="profileID" value="${item.profileID}"/>
+            </c:url>
             <tr>
                 <td><c:out value="${item.url}"/></td>
                 <joda:format var="creationDate" pattern="dd-MM-yyyy HH:mm" value="${item.creationDate}" style="F-"/>
@@ -31,7 +37,7 @@
                 <td><c:out value="${fn:length(item.historyOfSearch)}"/></td>
                 <td><c:out value="${fn:length(item.pages)}"/></td>
                 <td><a class="pure-button button-secondary button-small" href="${detailURL}">Detail</a></td>
-                <td><a class="pure-button button-error button-small" href="${detailURL}">Odstranit</a></td>
+                <td><a class="pure-button button-error button-small" href="${deleteURL}">Odstranit</a></td>
             </tr>
         </c:forEach>
         </tbody>
@@ -39,5 +45,5 @@
 </c:if>
 
 <c:if test="${empty searchResult}">
-    <p class="warning">Žádný profil nebyl nalezen.</p>
+    <p class="warning">Žádná profil nebyl nalezen.</p>
 </c:if>

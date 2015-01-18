@@ -13,7 +13,7 @@
 <hr />
 
 <%@include file="/WEB-INF/views/profile_navigation.jsp" %>
-
+<c:if test="${! empty mapResults}">
 <table class="pure-table wide">
     <thead>
     <tr>
@@ -25,12 +25,22 @@
     </thead>
     <tbody>
         <c:forEach items="${mapResults.keySet()}" var="key">
+            <c:url var="deleteURL" value="/odstranitKlicoveSlovo">
+                <c:param name="profileID" value="${profile.profileID}"/>
+                <c:param name="keyWord" value="${key}"/>
+            </c:url>
             <tr>
                 <td>${key}</td>
-                <td>vypsat datum</td>
+                <joda:format var="lastSearch" pattern="dd-MM-yyyy HH:mm" value="${lastSearchDate}" style="F-"/>
+                <td><c:out value="${lastSearch}"/></td>
                 <td><a href="/klicove_slovo/?subject=${key}&amp;profileID=${profile.profileID}" class="pure-button button-secondary button-small">Detail</a></td>
-                <td><a class="pure-button button-error button-small" href="">Odstranit</a></td>
+                <td><a class="pure-button button-error button-small" href="${deleteURL}">Odstranit</a></td>
             </tr>
         </c:forEach>
     </tbody>
 </table>
+</c:if>
+
+<c:if test="${empty mapResults}">
+    <p class="warning">Žádné klíčové slova nebyly nalezeny.</p>
+</c:if>

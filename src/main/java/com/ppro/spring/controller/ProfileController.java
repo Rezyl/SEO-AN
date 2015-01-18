@@ -1,23 +1,26 @@
 package com.ppro.spring.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.ppro.spring.model.Page;
+import com.ppro.spring.model.Profile;
+import com.ppro.spring.model.SearchResult;
+import com.ppro.spring.model.User;
+import com.ppro.spring.service.api.CRUDService;
+import com.ppro.spring.service.api.ProfileService;
+import com.ppro.spring.service.api.UserService;
+import com.ppro.spring.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ppro.spring.model.Profile;
-import com.ppro.spring.model.SearchResult;
-import com.ppro.spring.model.User;
-import com.ppro.spring.service.api.ProfileService;
-import com.ppro.spring.service.api.UserService;
-import com.ppro.spring.utils.AppUtils;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,6 +33,10 @@ public class ProfileController {
     @Autowired
     @Qualifier(value = "ProfileService")
     private ProfileService profileService;
+
+    @Autowired
+    @Qualifier(value = "SearchResultService")
+    private CRUDService<SearchResult> searchResultService;
 
     @Autowired
     private UserService userService;
@@ -48,7 +55,7 @@ public class ProfileController {
     public ModelAndView getDetailOfProfile(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
-        Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
+        Map<String, Set<SearchResult>> mapResults = profileService.getSearchResults(profile);
         mav.addObject("profile", profile);
         mav.addObject("mapResults", mapResults);
 
@@ -60,13 +67,24 @@ public class ProfileController {
         return AppUtils.goToPageByModelAndView(mav, "profile");
     }
 
+    @RequestMapping(value = "/odstranitProfil", method = RequestMethod.GET)
+    public String deleteProfile(Model model, @RequestParam("profileID") Long profileID) {
+        profileService.delete(profileID);
+        model.addAttribute("deleted", true);
+        return "redirect:profily";
+    }
+
+
     @RequestMapping(value = "/klicova_slova", method = RequestMethod.GET)
     public ModelAndView getProfileKeywords(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
-        Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
+        Map<String, Set<SearchResult>> mapResults = profileService.getSearchResults(profile);
         mav.addObject("profile", profile);
         mav.addObject("mapResults", mapResults);
+        //TODO
+//        mav.addObject("lastSearchDate", mapResults);
+
 
         if (subject != null) {
             mav.addObject("subject", subject);
@@ -80,7 +98,7 @@ public class ProfileController {
     public ModelAndView getProfileKeyword(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
-        Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
+        Map<String, Set<SearchResult>> mapResults = profileService.getSearchResults(profile);
         mav.addObject("profile", profile);
         mav.addObject("mapResults", mapResults);
 
@@ -92,19 +110,25 @@ public class ProfileController {
         return AppUtils.goToPageByModelAndView(mav, "profile_keyword");
     }
 
+    @RequestMapping(value = "/odstranitKlicoveSlovo", method = RequestMethod.GET)
+    public String deleteKeyWord(RedirectAttributes model, @RequestParam("profileID") Long profileID, @RequestParam(value = "keyWord") String keyWord) {
+
+        final Profile profile = profileService.getByID(profileID);
+        final List<SearchResult> searchResultsToDelete = profileService.getSearchedResultForSubject(profile,keyWord);
+        for (SearchResult searchResult : searchResultsToDelete) {
+            searchResultService.delete(searchResult.getSearchResultID());
+        }
+        model.addFlashAttribute("deleted", true);
+        return "redirect:profily";
+    }
+
     @RequestMapping(value = "/stranky", method = RequestMethod.GET)
-    public ModelAndView getProfilePages(@RequestParam("profileID") Long profileID, @RequestParam(value = "subject", required = false) String subject) {
+    public ModelAndView getProfilePages(@RequestParam("profileID") Long profileID) {
         ModelAndView mav = new ModelAndView();
         Profile profile = profileService.getByID(profileID);
-        Map<String, List<SearchResult>> mapResults = profileService.getSearchResults(profile);
+        final Set<Page> pages = profile.getPages();
         mav.addObject("profile", profile);
-        mav.addObject("mapResults", mapResults);
-
-        if (subject != null) {
-            mav.addObject("subject", subject);
-        } else if (!mapResults.isEmpty()){
-            mav.addObject("subject", mapResults.keySet().toArray()[0]);
-        }
+        mav.addObject("mapPages", pages);
         return AppUtils.goToPageByModelAndView(mav, "profile_pages");
     }
 

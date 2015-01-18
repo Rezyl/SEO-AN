@@ -30,10 +30,10 @@ public class Profile {
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime creationDate;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "profile")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "profile")
     private Set<SearchResult> historyOfSearch = new HashSet<SearchResult>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "profile")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "profile")
     private Set<Page> pages = new HashSet<Page>();
 
     @ManyToOne(fetch = FetchType.LAZY)
