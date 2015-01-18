@@ -65,4 +65,10 @@ public class UserManagementController {
         }
         return "redirect:/";
     }
+
+    @RequestMapping(value = "/ucet", method = RequestMethod.GET)
+    public String account(Model model) {
+
+        return AppUtils.goToPage(model, "account");
+    }
 }

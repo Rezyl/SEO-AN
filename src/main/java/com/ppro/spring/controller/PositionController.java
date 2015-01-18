@@ -26,7 +26,7 @@ public class PositionController {
 	private ProfileService profileService;
 
 	@RequestMapping(value = "/pozice", method = RequestMethod.GET)
-	public ModelAndView position(@RequestParam("url") String url) {
+	public ModelAndView position(@RequestParam(value = "url", required = false) String url) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("url", url);
         mav.addObject("search_engines", Server.getAll());

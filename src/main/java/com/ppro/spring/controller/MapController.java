@@ -24,7 +24,7 @@ public class MapController {
     private ProfileService profileService;
 
     @RequestMapping(value = "/mapa", method = RequestMethod.GET)
-    public ModelAndView position(@RequestParam("url") String url) {
+    public ModelAndView position(@RequestParam(value = "url", required = false) String url) {
       ModelAndView mav = new ModelAndView();
       mav.addObject("url", url);
       return AppUtils.goToPageByModelAndView(mav, "map");

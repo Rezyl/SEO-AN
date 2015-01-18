@@ -7,9 +7,9 @@
 
 <hr />
 
-    <form:form cssClass="pure-form pure-form-stacked" action="submitRegistration" commandName="newUser" method="post">
-        <form:input path="login" placeholder="Jméno"/>
-        <span><c:out value="${err}"/></span>
-        <form:password path="password" placeholder="Heslo"/>
-        <button type="submit" class="pure-button pure-button-primary">Registrace</button>
-    </form:form>
+<form:form cssClass="pure-form pure-form-stacked" action="submitRegistration" commandName="newUser" method="post">
+    <form:input path="login" placeholder="Jméno"/>
+    <span><c:out value="${err}"/></span>
+    <form:password path="password" placeholder="Heslo"/>
+    <button type="submit" class="pure-button pure-button-primary">Registrace</button>
+</form:form>
