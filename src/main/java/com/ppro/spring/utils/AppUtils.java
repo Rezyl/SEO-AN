@@ -43,7 +43,7 @@ public final class AppUtils {
 
 	public static String getActualLoggedUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth instanceof AnonymousAuthenticationToken) {
+        if (auth == null || auth instanceof AnonymousAuthenticationToken) {
             return null;
         } else {
             return auth.getName();

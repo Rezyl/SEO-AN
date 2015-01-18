@@ -8,9 +8,9 @@
 </header>
 
 <hr />
-
-<form class="pure-form pure-form-stacked" action="${zmenitUdaje}" method='POST'>
-    <input name="login" id="login" type="text" placeholder="Jméno" value="${actualUserName}">
-    <input name="password" id="password" type="password" placeholder="Heslo">
+<p class="error"><c:out value="${error}"/></p>
+<form:form cssClass="pure-form pure-form-stacked" action="/zmenitUdaje" commandName="updateUser" method="post">
+    <form:input path="login" placeholder="Jméno"/>
+    <form:password path="password" placeholder="Heslo"/>
     <button type="submit" class="pure-button pure-button-primary button-large">Změnit</button>
-</form>
+</form:form>

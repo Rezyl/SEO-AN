@@ -1,9 +1,15 @@
 package com.ppro.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +39,11 @@ public class UserManagementController {
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "Invalid username and password!");
+            model.addObject("error", "Špatné jméno nebo heslo!");
         }
 
         if (logout != null) {
-            model.addObject("msg", "You've been logged out successfully.");
+            model.addObject("msg", "Uspěšně odhlášen/a.");
         }
         return AppUtils.goToPageByModelAndView(model, "loginPage");
     }
@@ -67,22 +73,23 @@ public class UserManagementController {
 
     @RequestMapping(value = "/ucet", method = RequestMethod.GET)
     public String account(Model model) {
-        model.addAttribute("actualUserName", AppUtils.getActualLoggedUser());
+        model.addAttribute("updateUser", userService.getUserByName(AppUtils.getActualLoggedUser()));
         return AppUtils.goToPage(model, "account");
     }
 
     @RequestMapping(value = "/zmenitUdaje", method = RequestMethod.POST)
-    public String changeUser(Model model, @ModelAttribute(value = "updateUser") User user, SessionStatus status) {
-        final String actualLoggedUser = AppUtils.getActualLoggedUser();
+    public String changeUser(Model model, @ModelAttribute(value = "updateUser") User user,HttpServletRequest request, HttpServletResponse response, SessionStatus status) {
+        //log out actual user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        SecurityContextLogoutHandler ctxLogOut = new SecurityContextLogoutHandler(); // concern you
+        ctxLogOut.logout(request, response, auth); // concern you
 
-        if (user.getLogin().equals(actualLoggedUser)) {
-            userService.edit(user);
-            status.setComplete();
-        } else {
-            String errMes = "Nelze změnit cizí uživatelské údaje";
-            model.addAttribute("error", errMes);
-            return AppUtils.goToPage(model, "account");
-        }
-        return "redirect:profily";
+        //get hashed password
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
+        userService.edit(user);
+        status.setComplete();
+        return AppUtils.goToPage(model, "loginPage");
     }
 }
